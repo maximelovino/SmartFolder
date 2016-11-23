@@ -9,7 +9,7 @@ typedef struct HashTable {
 
 
 void init(HashTable* table, int size);
-void expand(HashTable* table);
+void expand(HashTable** table);
 void insert(HashTable* table, char* filePath);
 void remove(HashTable* table, char* filePath);
 int contains(HashTable* table, char* filePath);

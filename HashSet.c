@@ -11,8 +11,19 @@ void init(HashTable* table, int size){
 	table->table = malloc(size*sizeof(char*));
 	table->size = size;
 }
-void expand(HashTable* table){
 
+void expand(HashTable** table){
+	HashTable* newTable = malloc(sizeof(HashTable));
+
+	init(newTable, (*table)->size * 2);
+
+	for (size_t i = 0; i < (*table)->size; i++) {
+		if ((*table)->table[i] != NULL && strcmp((*table)->table[i], " ") != 0) {
+			insert(newTable, (*table)->table[i]);
+		}
+	}
+	destroy(table);
+	*table = newTable;
 }
 
 void insert(HashTable* table, char* filePath){
@@ -34,7 +45,8 @@ void remove(HashTable* table, char* filePath){
 		return;
 	}
 	free(table->table[index]);
-	table->table[index] = NULL;
+	//" " represents a freed cell
+	table->table[index] = " ";
 	table->filled--;
 }
 int contains(HashTable* table, char* filePath){
@@ -63,5 +75,5 @@ int hash(char* text){
 }
 
 void destroy(HashTable** table){
-	
+
 }
