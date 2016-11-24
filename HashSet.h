@@ -10,8 +10,8 @@ typedef struct HashTable {
 
 void init(HashTable* table, int size);
 void expand(HashTable** table);
-void insert(HashTable* table, char* filePath);
-void remove(HashTable* table, char* filePath);
+void insert(HashTable** table, char* filePath);
+void removeFromTable(HashTable* table, char* filePath);
 int contains(HashTable* table, char* filePath);
 int search(HashTable* table, char* filePath);
 int hash(char* text);

@@ -10,6 +10,7 @@ void init(HashTable* table, int size){
 	}
 	table->table = malloc(size*sizeof(char*));
 	table->size = size;
+	table->filled = 0;
 }
 
 void expand(HashTable** table){
@@ -17,33 +18,34 @@ void expand(HashTable** table){
 
 	init(newTable, (*table)->size * 2);
 
-	for (size_t i = 0; i < (*table)->size; i++) {
+	for (int i = 0; i < (*table)->size; i++) {
 		if ((*table)->table[i] != NULL && strcmp((*table)->table[i], " ") != 0) {
-			insert(newTable, (*table)->table[i]);
+			insert(&newTable, (*table)->table[i]);
 		}
 	}
 	destroy(table);
 	*table = newTable;
 }
 
-void insert(HashTable* table, char* filePath){
-	if (table->filled > 0.8 * table->size) {
+void insert(HashTable** table, char* filePath){
+	if ((*table)->filled > 0.8 * (*table)->size) {
 		expand(table);
 	}
-	int hash = hash(filePath) % table->size;
-	while (table->table[hash] != NULL) {
-		hash++;
-		hash %= table->size;
+	int hashValue = hash(filePath) % (*table)->size;
+	while ((*table)->table[hashValue] != NULL || strcmp((*table)->table[hashValue], " ") == 0) {
+		hashValue++;
+		hashValue %= (*table)->size;
 	}
-	table->table[hash] = malloc(strlen(filePath));
-	strcpy(table->table[hash], filePath);
-	table->filled++;
+	(*table)->table[hashValue] = malloc(strlen(filePath));
+	strcpy((*table)->table[hashValue], filePath);
+	(*table)->filled++;
 }
-void remove(HashTable* table, char* filePath){
+void removeFromTable(HashTable* table, char* filePath){
 	int index = search(table, filePath);
 	if (index == -1) {
 		return;
 	}
+	//TODO check if we can free and assign like that
 	free(table->table[index]);
 	//" " represents a freed cell
 	table->table[index] = " ";
@@ -53,27 +55,34 @@ int contains(HashTable* table, char* filePath){
 	return search(table, filePath) != -1;
 }
 int search(HashTable* table, char* filePath){
-	int hash = hash(filePath) % table->size;
-	while (table->table[hash] != NULL) {
-		if (strcmp(table->table[hash], filePath) ==  0) {
-			return hash;
+	int hashValue = hash(filePath) % table->size;
+	while (table->table[hashValue] != NULL) {
+		if (strcmp(table->table[hashValue], filePath) ==  0) {
+			return hashValue;
 		}
-		hash++;
-		hash %= table->size;
+		hashValue++;
+		hashValue %= table->size;
 	}
 	return -1;
 }
 
 int hash(char* text){
-	int hash = 0;
+	int hashValue = 0;
 	int i = 0;
 	while (text[i] != 0) {
-		hash += (i+1) * text[i];
+		hashValue += (i+1) * text[i];
 		i++;
 	}
-	return hash;
+	return hashValue;
 }
 
 void destroy(HashTable** table){
-
+	for (int i = 0; i < (*table)->size; i++) {
+		if ((*table)->table[i] != NULL && strcmp((*table)->table[i]," ") != 0) {
+			free((*table)->table[i]);
+		}
+	}
+	free((*table)->table);
+	free((*table));
+	*table = NULL;
 }
