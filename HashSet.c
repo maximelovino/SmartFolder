@@ -8,11 +8,8 @@ void init(HashTable* table, int size){
 	if (table == NULL) {
 		return;
 	}
-	table->table = malloc(size*sizeof(char*));
+	table->table = calloc(size, sizeof(char*));
 	table->size = size;
-	for (size_t i = 0; i < table->size; i++) {
-		table->table[i] = 0;
-	}
 	table->filled = 0;
 }
 
