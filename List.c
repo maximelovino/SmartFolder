@@ -93,3 +93,12 @@ List* listIntersect(List* l1, List* l2) {
     }
     return newList;
 }
+
+void deleteList(List* l) {
+    while (l->head) {
+        ListElement* next = l->head->next;
+        free(l->head);
+        l->head = next;
+    }
+    free(l);
+}

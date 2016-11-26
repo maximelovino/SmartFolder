@@ -19,5 +19,6 @@ int search(List* l, char* element);
 char* get(List* l, int idx);
 List* listUnion(List* l1, List* l2);
 List* listIntersect(List* l1, List* l2);
+void deleteList(List* l);
 
 #endif /* end of include guard: _LIST_H_ */
