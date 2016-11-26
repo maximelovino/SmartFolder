@@ -1,6 +1,7 @@
 #include "Search.h"
 #include "List.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int main(int argc, char const *argv[]) {
     List* issou = searchDirectory(argv[1], NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
