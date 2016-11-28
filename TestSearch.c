@@ -4,7 +4,9 @@
 #include <stdio.h>
 
 int main(int argc, char const *argv[]) {
-    List* issou = searchDirectory(argv[1], NULL, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+	searchType type = SIZE_BIGGER;
+	int size = 90000;
+    List* issou = searchDirectory(argv[1], type, &size);
     for (int i = 0; i < issou->size; i++) {
         printf("%s\n", get(issou, i));
     }

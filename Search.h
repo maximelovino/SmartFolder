@@ -3,6 +3,9 @@
 #include "List.h"
 #include <sys/stat.h>
 
+
+typedef enum {NAME, SIZE_SMALLER, SIZE_EQUAL, SIZE_BIGGER, CREATION_DATE, MODIF_DATE, USAGE_DATE, OWNER, GROUP, MODE} searchType;
+
 /**
  * Searches recursivly through directories beneath a certain directory
  * @param  rootDir      The directory to start from
@@ -17,7 +20,7 @@
  * @param  mode         The access mode of the file or NULL
  * @return              A list of matching files (all NULL values will be considered matching)
  */
-List* searchDirectory(char* rootDir, char* filePattern, int searchSize, int sizeOP, struct timespec* creationDate, struct timespec* modDate, struct timespec* useDate, uid_t* userOwner, gid_t* groupOwner, mode_t* mode);
+List* searchDirectory(char* rootDir, searchType type, void* searchArg);
 
 //This file may also contain comparators functions for mode, time etc..
 #endif /* end of include guard: _SEARCH_H_ */
