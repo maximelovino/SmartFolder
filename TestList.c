@@ -4,7 +4,7 @@
 
 int main() {
     List* l1 = initList();
-    for (size_t i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++) {
         char ch = 'a';
         char* string = malloc(2);
         string[0] = ch;
@@ -13,7 +13,7 @@ int main() {
     }
 
     List* l2 = initList();
-    for (size_t i = 5; i < 12; i++) {
+    for (int i = 5; i < 12; i++) {
         char ch = 'a';
         char* string = malloc(2);
         string[0] = ch;
@@ -21,22 +21,22 @@ int main() {
         insert(l2, string);
     }
     printf("LOL l1 is happening\n");
-    for (size_t i = 0; i < l1->size; i++) {
+    for (int i = 0; i < l1->size; i++) {
         printf("%s\n", get(l1, i));
     }
     printf("LOL l2 is happening\n");
-    for (size_t i = 0; i < l2->size; i++) {
+    for (int i = 0; i < l2->size; i++) {
         printf("%s\n", get(l2, i));
     }
 
     printf("intersection\n");
     List* intersectList = listIntersect(l1, l2);
-    for (size_t i = 0; i < intersectList->size; i++) {
+    for (int i = 0; i < intersectList->size; i++) {
         printf("%s\n", get(intersectList,i));
     }
     printf("union\n");
     List* unionList = listUnion(l1, l2);
-    for (size_t i = 0; i < unionList->size; i++) {
+    for (int i = 0; i < unionList->size; i++) {
         printf("%s\n", get(unionList,i));
     }
 

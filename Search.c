@@ -33,6 +33,8 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 			//TODO: Test if the criteria is NULL or the criteria matches the file stats
 			int size;
 			char* searchString;
+			uid_t uid;
+			gid_t gid;
 			switch (type) {
 				case NAME:
 					searchString = (char*) searchArg;
@@ -57,6 +59,26 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 					if (statbuf.st_size == size) {
 						insert(result, entry->d_name);
 					}
+					break;
+				case CREATION_DATE:
+					break;
+				case MODIF_DATE:
+					break;
+				case USAGE_DATE:
+					break;
+				case OWNER:
+					uid = *((uid_t*) searchArg);
+					if (statbuf.st_uid == uid) {
+						insert(result, entry->d_name);
+					}
+					break;
+				case GROUP:
+					gid = *((gid_t*) searchArg);
+					if (statbuf.st_gid == gid) {
+						insert(result,entry->d_name);
+					}
+					break;
+				case MODE:
 					break;
 				default:
 					printf("Haven't done that yet\n");
