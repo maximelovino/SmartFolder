@@ -1,7 +1,13 @@
 CC=gcc
 FLAGS= -Wall -Wextra -std=c99 -c -g
 
-all: TestHashSet TestStack TestList TestSearch
+all: TestHashSet TestStack TestList TestSearch TestParser
+
+TestParser: TestParser.o Parser.o
+	$(CC) $^ -o $@
+
+Parser.o: Parser.c Parser.h
+	$(CC) $(FLAGS) $<
 
 TestSearch: TestSearch.o Search.o List.o
 	$(CC) $^ -o $@
