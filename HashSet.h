@@ -1,20 +1,20 @@
 #ifndef _HASH_SET_
 #define _HASH_SET_
 
-typedef struct HashTable {
+typedef struct HashSet {
 	char** table;
 	int size;
 	int filled;
-} HashTable;
+} HashSet;
 
 
-void init(HashTable* table, int size);
-void expand(HashTable** table);
-void insert(HashTable** table, char* filePath);
-void removeFromTable(HashTable* table, char* filePath);
-int contains(HashTable* table, char* filePath);
-int search(HashTable* table, char* filePath);
+void initMap(HashSet* table, int size);
+void expand(HashSet** table);
+void put(HashSet** table, char* filePath);
+void removeFromTable(HashSet* table, char* filePath);
+int contains(HashSet* table, char* filePath);
+int searchInMap(HashSet* table, char* filePath);
 int hash(char* text);
-void destroy(HashTable** table);
+void deleteTable(HashSet** table);
 
 #endif /* end of include guard: _HASH_SET_ */

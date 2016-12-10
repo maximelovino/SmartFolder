@@ -4,7 +4,7 @@
 #include <string.h>
 #include "HashSet.h"
 
-void init(HashTable* table, int size){
+void initMap(HashSet* table, int size){
 	if (table == NULL) {
 		return;
 	}
@@ -13,21 +13,21 @@ void init(HashTable* table, int size){
 	table->filled = 0;
 }
 
-void expand(HashTable** table){
-	HashTable* newTable = malloc(sizeof(HashTable));
+void expand(HashSet** table){
+	HashSet* newTable = malloc(sizeof(HashSet));
 
-	init(newTable, (*table)->size * 2);
+	initMap(newTable, (*table)->size * 2);
 
 	for (int i = 0; i < (*table)->size; i++) {
 		if ((*table)->table[i] != NULL && strcmp((*table)->table[i], " ") != 0) {
-			insert(&newTable, (*table)->table[i]);
+			put(&newTable, (*table)->table[i]);
 		}
 	}
-	destroy(table);
+	deleteTable(table);
 	*table = newTable;
 }
 
-void insert(HashTable** table, char* filePath){
+void put(HashSet** table, char* filePath){
 	if ((*table)->filled >= 0.8 * (*table)->size) {
 		printf("We need to expand\n");
 		expand(table);
@@ -37,7 +37,7 @@ void insert(HashTable** table, char* filePath){
 	}
 	int hashValue = hash(filePath) % (*table)->size;
 	printf("%s, initial hash %d\n", filePath, hashValue);
-	printf("%s has a hash of %d, at that case there is %d\n", filePath, hashValue, (*table)->table[hashValue]);
+	printf("%s has a hash of %d, at that case there is %s\n", filePath, hashValue, (*table)->table[hashValue]);
 	//TODO There has to be a better way
 	while ((*table)->table[hashValue] != 0 || ((*table)->table[hashValue] != 0 && strcmp((*table)->table[hashValue], " ") == 0)) {
 		hashValue++;
@@ -48,8 +48,8 @@ void insert(HashTable** table, char* filePath){
 	strcpy((*table)->table[hashValue], filePath);
 	(*table)->filled++;
 }
-void removeFromTable(HashTable* table, char* filePath){
-	int index = search(table, filePath);
+void removeFromTable(HashSet* table, char* filePath){
+	int index = searchInMap(table, filePath);
 	if (index == -1) {
 		return;
 	}
@@ -59,10 +59,10 @@ void removeFromTable(HashTable* table, char* filePath){
 	table->table[index] = " ";
 	table->filled--;
 }
-int contains(HashTable* table, char* filePath){
-	return search(table, filePath) != -1;
+int contains(HashSet* table, char* filePath){
+	return searchInMap(table, filePath) != -1;
 }
-int search(HashTable* table, char* filePath){
+int searchInMap(HashSet* table, char* filePath){
 	int hashValue = hash(filePath) % table->size;
 	while (table->table[hashValue] != NULL) {
 		if (strcmp(table->table[hashValue], filePath) ==  0) {
@@ -84,7 +84,7 @@ int hash(char* text){
 	return hashValue;
 }
 
-void destroy(HashTable** table){
+void deleteTable(HashSet** table){
 	for (int i = 0; i < (*table)->size; i++) {
 		if ((*table)->table[i] != NULL && strcmp((*table)->table[i]," ") != 0) {
 			free((*table)->table[i]);

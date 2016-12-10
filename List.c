@@ -39,13 +39,13 @@ void removeIndex(List* l, int idx) {
 }
 
 void removeObject(List* l, char* element) {
-    int idx = search(l, element);
+    int idx = searchInList(l, element);
     if (idx != -1) {
         removeIndex(l, idx);
     }
 }
 
-int search(List* l, char* element) {
+int searchInList(List* l, char* element) {
     ListElement* le = l->head;
     int i = 0;
     while (le != NULL) {
@@ -74,7 +74,7 @@ List* listUnion(List* l1, List* l2) {
     }
     le = l2->head;
     for (int i = 0; i < l2->size; i++) {
-        if (search(newList, le->data) == -1) {
+        if (searchInList(newList, le->data) == -1) {
             insert(newList, le->data);
         }
         le = le->next;
@@ -86,7 +86,7 @@ List* listIntersect(List* l1, List* l2) {
     List* newList = initList();
     ListElement* le = l1->head;
     for (int i = 0; i < l1->size; i++) {
-        if (search(l2, le->data) != -1) {
+        if (searchInList(l2, le->data) != -1) {
             insert(newList, le->data);
         }
         le = le->next;

@@ -15,7 +15,7 @@ List* initList();
 void insert(List* l, char* element);
 void removeIndex(List* l, int idx);
 void removeObject(List* l, char* element);
-int search(List* l, char* element);
+int searchInList(List* l, char* element);
 char* get(List* l, int idx);
 List* listUnion(List* l1, List* l2);
 List* listIntersect(List* l1, List* l2);
