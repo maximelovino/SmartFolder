@@ -94,3 +94,13 @@ void deleteTable(HashSet** table){
 	free((*table));
 	*table = NULL;
 }
+
+void dumpTable(HashSet* table) {
+	logger(0, "%s\n", "------- HashSet Dump -------");
+	for (int i = 0; i < table->size; i++) {
+		if(table->table[i] != 0 && strcmp(table->table[i], " ") != 0) {
+			logger(0, "%s\n", table->table[i]);
+		}
+	}
+	logger(0, "%s\n", "----- End of HashSet Dump -----");
+}

@@ -20,10 +20,7 @@ void insert(List* l, char* element) {
 void removeIndex(List* l, int idx) {
     ListElement* le = l->head;
     if (idx == 0) {
-        ListElement* exHead = l->head;
         l->head = l->head->next;
-        free(exHead->data);
-        free(exHead);
         l->size--;
         return;
     }
@@ -31,11 +28,8 @@ void removeIndex(List* l, int idx) {
     for (int i = 0; i < idx-1; i++) {
         le = le->next;
     }
-    ListElement* temp = le->next;
     le->next = le->next->next;
     l->size--;
-    free(temp->data);
-    free(temp);
 }
 
 void removeObject(List* l, char* element) {

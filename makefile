@@ -1,9 +1,11 @@
 CC=gcc
 FLAGS= -Wall -Wextra -std=c99 -c -g
+DS=HashSet.o List.o Stack.o
+BD=Logger.o Syscall.o Search.o
 
-all: TestHashSet TestStack TestList TestSearch TestParser SmartFolder
+all: TestHashSet TestStack TestList TestSearch TestParser TestLogger SmartFolder
 
-SmartFolder: SmartFolder.o HashSet.o List.o Stack.o Syscall.o Parser.o
+SmartFolder: SmartFolder.o $(DS) $(BD) Parser.o
 	$(CC) $^ -o $@
 
 SmartFolder.o: SmartFolder.c
@@ -12,7 +14,7 @@ SmartFolder.o: SmartFolder.c
 Syscall.o: Syscall.c Syscall.h
 	$(CC) $(FLAGS) $<
 
-TestParser: TestParser.o Stack.o HashSet.o List.o Parser.o
+TestParser: TestParser.o $(DS) $(BD) Parser.o
 	$(CC) $^ -o $@
 
 Parser.o: Parser.c Parser.h
@@ -36,7 +38,7 @@ TestSearch.o: TestSearch.c
 Search.o: Search.c Search.h
 	$(CC) $(FLAGS) $<
 
-TestHashSet: TestHashSet.o HashSet.o
+TestHashSet: TestHashSet.o Logger.o HashSet.o
 	$(CC) $^ -o $@
 
 TestHashSet.o: TestHashSet.c

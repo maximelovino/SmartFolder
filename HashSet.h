@@ -1,5 +1,6 @@
 #ifndef _HASH_SET_
 #define _HASH_SET_
+#include "Logger.h"
 
 typedef struct HashSet {
 	char** table;
@@ -16,5 +17,6 @@ int contains(HashSet* table, char* filePath);
 int searchInMap(HashSet* table, char* filePath);
 int hash(char* text);
 void deleteTable(HashSet** table);
+void dumpTable(HashSet* table);
 
 #endif /* end of include guard: _HASH_SET_ */

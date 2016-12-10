@@ -127,26 +127,52 @@ int isValidSearch(searchType st, char* arg) {
 }
 
 //TODO add test for the NOT boolean operator
-int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet* result) {
+int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** result) {
     Stack* s = initStack();
     for (int i = 0; i < exprLen;) {
         char* p1 = expression[i];
         if(!isBooleanOp(p1)) {
-            push(s, p1);
-            push(s, expression[i+1]);
+            searchType st = getSearchType(p1, expression[i+1]);
+            if(isValidSearch(st, expression[i+1])) {
+                char* op1 = trimArgument(st, expression[i+1]);
+                List* l1 = searchDirectory(folder, st, op1);
+                push(s, l1);
+            } else {
+                return -1;
+            }
+
             i += 2;
         } else {
-
-            char* o1 = pop(s);
-            char* op1 = pop(s);
-
-            void* o2 = pop(s);
-            if(isEmpty(s)) {
-                List* l1 = (List*)o2;
-
+            List* l1 = pop(s);
+            List* l2 = pop(s);
+            List* l3 = NULL;
+            if(strcmp(p1, "and") == 0) {
+                l3 = listIntersect(l1, l2);
+            } else if(strcmp(p1, "or") == 0) {
+                l3 = listUnion(l1, l2);
             } else {
-                char* op2 = pop(s);
+                logger(3, "%s", "Operator not supported");
             }
+            deleteList(l1);
+            deleteList(l2);
+            push(s, l3);
+            i++;
         }
     }
+    List* final = pop(s);
+    while(final->head != NULL) {
+        char* e0 = get(final, 0);
+        removeIndex(final, 0);
+        put(result, e0);
+    }
+    return 0;
+}
+
+char* trimArgument(searchType st, char* arg) {
+    if(st == SIZE_BIGGER || st == SIZE_SMALLER || st == STATUS_DATE_B || st == STATUS_DATE_A || st == MODIF_DATE_B || st == MODIF_DATE_A || st == USAGE_DATE_B || st == USAGE_DATE_A) {
+        char* narg = malloc(strlen(arg));
+        strcpy(narg, &(arg[1]));
+        return narg;
+    }
+    return arg;
 }

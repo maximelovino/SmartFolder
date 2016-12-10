@@ -15,6 +15,7 @@
 #include "HashSet.h"
 #include "List.h"
 #include "Stack.h"
+#include "Logger.h"
 #include <ctype.h>
 
 int isValidPath(char* path);
@@ -53,6 +54,14 @@ int isValidSearch(searchType st, char* arg);
  * @param  result     A map to put the result of the search
  * @return            0 if the search was ok, 1 otherwise
  */
-int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet* result);
+int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** result);
+
+/**
+ * Removes the + or - before a search argument
+ * @param  st  searchType
+ * @param  arg argument to trim
+ * @return     Trimed argument
+ */
+char* trimArgument(searchType st, char* arg);
 
 #endif /* end of include guard: _PARSER_H_ */
