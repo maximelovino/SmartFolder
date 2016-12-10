@@ -18,6 +18,15 @@ TestParser: TestParser.o Stack.o HashSet.o List.o Parser.o
 Parser.o: Parser.c Parser.h
 	$(CC) $(FLAGS) $<
 
+TestLogger: TestLogger.o Logger.o
+	$(CC) $^ -o $@
+
+Logger.o: Logger.c Logger.h
+	$(CC) $(FLAGS) $<
+
+TestLogger.o: TestLogger.c
+	$(CC) $(FLAGS) $<
+
 TestSearch: TestSearch.o Search.o List.o
 	$(CC) $^ -o $@
 
@@ -55,4 +64,4 @@ List.o: List.c List.h
 	$(CC) $(FLAGS) $<
 
 clean:
-	rm *.o TestHashSet TestStack TestList TestSearch TestParser SmartFolder
+	rm *.o TestHashSet TestStack TestList TestSearch TestParser SmartFolder TestLogger
