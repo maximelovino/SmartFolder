@@ -127,7 +127,7 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
                     }
 					break;
 				default:
-					fprintf(stderr, "This test is invalid\n");
+					insert(result, realpath(entry->d_name, NULL));
 					break;
 			}
 		}

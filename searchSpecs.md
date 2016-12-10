@@ -2,7 +2,7 @@
 
 ## Search arguments
 - `--size [-+]<size>`
-- `--dateCreated [-+]<YYYY-MM-DD>`
+- `--dateStatus [-+]<YYYY-MM-DD>`
 - `--dateModified [-+]<YYYY-MM-DD>`
 - `--dateUsed [-+]<YYYY-MM-DD>`
 - `--uid <loginName>`

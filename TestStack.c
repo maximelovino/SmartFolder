@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int main(int argc, char const *argv[]) {
+int main() {
     Stack* s = initStack();
 
     for (size_t i = 0; i < 10; i++) {

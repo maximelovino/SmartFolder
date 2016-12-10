@@ -1,9 +1,18 @@
 CC=gcc
 FLAGS= -Wall -Wextra -std=c99 -c -g
 
-all: TestHashSet TestStack TestList TestSearch TestParser
+all: TestHashSet TestStack TestList TestSearch TestParser SmartFolder
 
-TestParser: TestParser.o Parser.o
+SmartFolder: SmartFolder.o HashSet.o List.o Stack.o Syscall.o Parser.o
+	$(CC) $^ -o $@
+
+SmartFolder.o: SmartFolder.c
+	$(CC) $(FLAGS) $<
+
+Syscall.o: Syscall.c Syscall.h
+	$(CC) $(FLAGS) $<
+
+TestParser: TestParser.o Stack.o HashSet.o List.o Parser.o
 	$(CC) $^ -o $@
 
 Parser.o: Parser.c Parser.h
@@ -46,4 +55,4 @@ List.o: List.c List.h
 	$(CC) $(FLAGS) $<
 
 clean:
-	rm *.o TestHashSet TestStack TestList TestSearch
+	rm *.o TestHashSet TestStack TestList TestSearch TestParser SmartFolder
