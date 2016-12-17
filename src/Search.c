@@ -63,49 +63,49 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 					break;
 
 				case STATUS_DATE_B:
-                    if(timeCompare(&(statbuf.st_ctimespec), (struct timespec*)searchArg) == -1) {
+                    if(timeCompare(&(statbuf.st_ctim), (struct timespec*)searchArg) == -1) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
                     break;
 				case MODIF_DATE_B:
-                    if(timeCompare(&(statbuf.st_mtimespec), (struct timespec*)searchArg) == -1) {
+                    if(timeCompare(&(statbuf.st_mtim), (struct timespec*)searchArg) == -1) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
                     break;
 				case USAGE_DATE_B:
-                    if(timeCompare(&(statbuf.st_atimespec), (struct timespec*)searchArg) == -1) {
+                    if(timeCompare(&(statbuf.st_atim), (struct timespec*)searchArg) == -1) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
 					break;
 
 				case STATUS_DATE_E:
-                    if(timeCompare(&(statbuf.st_ctimespec), (struct timespec*)searchArg) == 0) {
+                    if(timeCompare(&(statbuf.st_ctim), (struct timespec*)searchArg) == 0) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
                     break;
 				case MODIF_DATE_E:
-                    if(timeCompare(&(statbuf.st_mtimespec), (struct timespec*)searchArg) == 0) {
+                    if(timeCompare(&(statbuf.st_mtim), (struct timespec*)searchArg) == 0) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
                     break;
 				case USAGE_DATE_E:
-                    if(timeCompare(&(statbuf.st_atimespec), (struct timespec*)searchArg) == 0) {
+                    if(timeCompare(&(statbuf.st_atim), (struct timespec*)searchArg) == 0) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
 					break;
 
 				case STATUS_DATE_A:
-                    if(timeCompare(&(statbuf.st_ctimespec), (struct timespec*)searchArg) == 1) {
+                    if(timeCompare(&(statbuf.st_ctim), (struct timespec*)searchArg) == 1) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
 					break;
 				case MODIF_DATE_A:
-                    if(timeCompare(&(statbuf.st_mtimespec), (struct timespec*)searchArg) == 1) {
+                    if(timeCompare(&(statbuf.st_mtim), (struct timespec*)searchArg) == 1) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
 					break;
 				case USAGE_DATE_A:
-                    if(timeCompare(&(statbuf.st_atimespec), (struct timespec*)searchArg) == 1) {
+                    if(timeCompare(&(statbuf.st_atim), (struct timespec*)searchArg) == 1) {
                         insert(result, realpath(entry->d_name, NULL));
                     }
 					break;
