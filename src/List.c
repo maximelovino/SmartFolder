@@ -88,6 +88,42 @@ List* listIntersect(List* l1, List* l2) {
     return newList;
 }
 
+List* listXOR(List* l1, List* l2){
+  List* newList = initList();
+  ListElement* le = l1->head;
+
+  for (int i = 0; i < l1->size; i++) {
+    if (searchInList(l2, le->data) == -1) {
+        insert(newList,le->data);
+    }
+    le = le->next;
+  }
+
+  le = l2->head;
+
+  for (size_t i = 0; i < l2->size; i++) {
+    if (searchInList(l1, le->data) == -1) {
+      insert(newList, le->data);
+    }
+    le = le->next;
+  }
+
+  return newList;
+}
+
+List* listComplement(List* l1, List* l2){
+  List* newList = initList();
+  ListElement* le = l1->head;
+
+  for (size_t i = 0; i < l1->size; i++) {
+    if (searchInList(l2, le->data) == -1) {
+      insert(newList, le->data);
+    }
+    le = le->next;
+  }
+  return newList;
+}
+
 void deleteList(List* l) {
     while (l->head) {
         ListElement* next = l->head->next;

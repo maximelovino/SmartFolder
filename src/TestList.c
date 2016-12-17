@@ -39,6 +39,15 @@ int main() {
     for (int i = 0; i < unionList->size; i++) {
         printf("%s\n", get(unionList,i));
     }
-
+    printf("XOR\n");
+    List* xorList = listXOR(l1,l2);
+    for (int i = 0; i < xorList->size; i++) {
+      printf("%s\n", get(xorList, i) );
+    }
+    printf("complement\n");
+    List* compList = listComplement(l1,l2);
+    for (int i = 0; i < compList->size; i++) {
+      printf("%s\n", get(compList, i) );
+    }
     return 0;
 }
