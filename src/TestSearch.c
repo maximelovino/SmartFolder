@@ -6,10 +6,12 @@
 
 int main(int argc, char const *argv[]) {
 	searchType type = MODE;
-	int lel = 777;
-    List* issou = searchDirectory(argv[1], type, &lel);
-    for (int i = 0; i < issou->size; i++) {
-        printf("%s\n", get(issou, i));
-    }
-    return 0;
+	//0 in front to write as octal number
+	int lel = 0777;
+	char* searchQuery = "a.tx";
+  List* issou = searchDirectory(argv[1], type, &lel);
+  for (int i = 0; i < issou->size; i++) {
+      printf("%s\n", get(issou, i));
+  }
+  return 0;
 }

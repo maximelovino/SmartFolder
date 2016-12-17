@@ -35,6 +35,7 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 			char* searchString;
 			uid_t uid;
 			gid_t gid;
+			int permissions;
 
 			switch (type) {
 				case NAME:
@@ -122,9 +123,11 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 					}
 					break;
 				case MODE:
-                    if((statbuf.st_mode & (*(int*)searchArg)) > 0) {
-                        insert(result, realpath(entry->d_name, NULL));
-                    }
+					permissions = statbuf.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
+					//Here we take what's EQUAL to the permission we ask for
+          if(permissions == (*(int*)searchArg)) {
+              insert(result, realpath(entry->d_name, NULL));
+          }
 					break;
 				default:
 					insert(result, realpath(entry->d_name, NULL));
