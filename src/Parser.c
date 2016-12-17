@@ -151,7 +151,7 @@ int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** re
             } else if(strcmp(p1, "or") == 0) {
                 l3 = listUnion(l1, l2);
             } else {
-                logger(3, "%s", "Operator not supported");
+                logMessage(3, "%s", "Operator not supported");
             }
             deleteList(l1);
             deleteList(l2);

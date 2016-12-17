@@ -9,14 +9,14 @@ typedef struct HashSet {
 } HashSet;
 
 
-void initMap(HashSet* table, int size);
+void initSet(HashSet* table, int size);
 void expand(HashSet** table);
 void put(HashSet** table, char* filePath);
-void removeFromTable(HashSet* table, char* filePath);
+void removeFromSet(HashSet* table, char* filePath);
 int contains(HashSet* table, char* filePath);
-int searchInMap(HashSet* table, char* filePath);
+int searchInSet(HashSet* table, char* filePath);
 int hash(char* text);
-void deleteTable(HashSet** table);
-void dumpTable(HashSet* table);
+void deleteSet(HashSet** table);
+void dumpSet(HashSet* table);
 
 #endif /* end of include guard: _HASH_SET_ */

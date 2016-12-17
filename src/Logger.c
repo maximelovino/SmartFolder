@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-void logger(int level, const char* format, ...){
+void logMessage(int level, const char* format, ...){
 	if (level >= LOG_LEVEL) {
 		va_list args;
 		va_start(args, format);

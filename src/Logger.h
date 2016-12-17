@@ -7,6 +7,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-void logger(int level, const char* format, ...);
+void logMessage(int level, const char* format, ...);
 
 #endif /* end of include guard: _LOGGER_H_ */

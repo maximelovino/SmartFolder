@@ -6,8 +6,7 @@
 
 int main() {
 	HashSet* set = malloc(sizeof(HashSet));
-	initMap(set,10);
-	printf("%s\n", set->table[1]);
+	initSet(set,10);
 	for (size_t i = 0; i < 5; i++) {
 		char* text = malloc(2*sizeof(char));
 		text[0] = 'a';
@@ -21,5 +20,6 @@ int main() {
 	put(&set, "ae");
 	put(&set, "ae");
 	printf("%d/%d\n", set->filled, set->size);
+	dumpSet(set);
 	return 0;
 }

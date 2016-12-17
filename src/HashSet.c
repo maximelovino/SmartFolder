@@ -4,7 +4,7 @@
 #include <string.h>
 #include "HashSet.h"
 
-void initMap(HashSet* table, int size){
+void initSet(HashSet* table, int size){
 	if (table == NULL) {
 		return;
 	}
@@ -16,14 +16,14 @@ void initMap(HashSet* table, int size){
 void expand(HashSet** table){
 	HashSet* newTable = malloc(sizeof(HashSet));
 
-	initMap(newTable, (*table)->size * 2);
+	initSet(newTable, (*table)->size * 2);
 
 	for (int i = 0; i < (*table)->size; i++) {
 		if ((*table)->table[i] != NULL && strcmp((*table)->table[i], " ") != 0) {
 			put(&newTable, (*table)->table[i]);
 		}
 	}
-	deleteTable(table);
+	deleteSet(table);
 	*table = newTable;
 }
 
@@ -48,8 +48,8 @@ void put(HashSet** table, char* filePath){
 	strcpy((*table)->table[hashValue], filePath);
 	(*table)->filled++;
 }
-void removeFromTable(HashSet* table, char* filePath){
-	int index = searchInMap(table, filePath);
+void removeFromSet(HashSet* table, char* filePath){
+	int index = searchInSet(table, filePath);
 	if (index == -1) {
 		return;
 	}
@@ -59,10 +59,12 @@ void removeFromTable(HashSet* table, char* filePath){
 	table->table[index] = " ";
 	table->filled--;
 }
+
 int contains(HashSet* table, char* filePath){
-	return searchInMap(table, filePath) != -1;
+	return searchInSet(table, filePath) != -1;
 }
-int searchInMap(HashSet* table, char* filePath){
+
+int searchInSet(HashSet* table, char* filePath){
 	int hashValue = hash(filePath) % table->size;
 	while (table->table[hashValue] != NULL) {
 		if (strcmp(table->table[hashValue], filePath) ==  0) {
@@ -84,7 +86,7 @@ int hash(char* text){
 	return hashValue;
 }
 
-void deleteTable(HashSet** table){
+void deleteSet(HashSet** table){
 	for (int i = 0; i < (*table)->size; i++) {
 		if ((*table)->table[i] != NULL && strcmp((*table)->table[i]," ") != 0) {
 			free((*table)->table[i]);
@@ -95,12 +97,12 @@ void deleteTable(HashSet** table){
 	*table = NULL;
 }
 
-void dumpTable(HashSet* table) {
-	logger(0, "%s\n", "------- HashSet Dump -------");
+void dumpSet(HashSet* table) {
+	logMessage(0, "%s\n", "------- HashSet Dump -------");
 	for (int i = 0; i < table->size; i++) {
 		if(table->table[i] != 0 && strcmp(table->table[i], " ") != 0) {
-			logger(0, "%s\n", table->table[i]);
+			logMessage(0, "%s\n", table->table[i]);
 		}
 	}
-	logger(0, "%s\n", "----- End of HashSet Dump -----");
+	logMessage(0, "%s\n", "----- End of HashSet Dump -----");
 }
