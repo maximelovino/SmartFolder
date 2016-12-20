@@ -4,7 +4,7 @@ DS=HashSet.o List.o Stack.o
 BD=Logger.o Syscall.o Search.o
 LINKFLAGS= -lrt
 
-all: TestHashSet TestStack TestList TestSearch TestParser TestLogger SmartFolder
+all: TestHashSet TestStack TestList TestSearch TestParser TestLogger SmartFolder TestLinker
 
 SmartFolder: SmartFolder.o $(DS) $(BD) Parser.o
 	$(CC) $^ -o $@ $(LINKFLAGS)
@@ -39,6 +39,15 @@ TestSearch.o: TestSearch.c
 Search.o: Search.c Search.h
 	$(CC) $(FLAGS) $<
 
+TestLinker: TestLinker.o Linker.o Syscall.o Logger.o
+	$(CC) $^ -o $@ $(LINKFLAGS)
+
+TestLinker.o: TestLinker.c
+	$(CC) $(FLAGS) $<
+
+Linker.o: Linker.c Linker.h
+	$(CC) $(FLAGS) $<
+
 TestHashSet: TestHashSet.o Logger.o HashSet.o
 	$(CC) $^ -o $@ $(LINKFLAGS)
 
@@ -67,4 +76,4 @@ List.o: List.c List.h
 	$(CC) $(FLAGS) $<
 
 clean:
-	rm *.o TestHashSet TestStack TestList TestSearch TestParser SmartFolder TestLogger
+	rm *.o TestHashSet TestStack TestList TestSearch TestParser SmartFolder TestLogger TestLinker
