@@ -33,13 +33,27 @@ Nous utilisons une structure de Pile pour stocker les résultats d'une recherche
 \inputminted[breaklines,breaksymbol=, frame=single, stepnumber=5,tabsize=2]{C}{../src/Stack.h}
 \subsection{Utils}
 \subsubsection{Logger}
+Nous avons réalisé un Logger pour pouvoir afficher sur la console des messages de notre programme, pour ceci nous définissons 3 niveaux de severité pour un message:
+\begin{itemize}
+	\item 0: INFO, un message d'information, par exemple un dump de hashtable ou des informations sur les fichiers trouvés
+	\item 1: WARNING, un message de warning, par exemple une erreur dans notre programme durant son execution mais qui n'empêche pas le programme de continuer
+	\item 2: FATAL, un message d'erreur, lorsqu'une erreur se produit qui fait crasher le programme entièrement
+\end{itemize}
+Dans le fichier \verb+Logger.h+ on peut changer la valeur du \verb+#define LOG_LEVEL X+ par le niveau minimal que l'on veut. C'est-à-dire que si nous définissons 1 ici, le logger affichera uniquement les messages de niveau 1 et 2. \\
+
+Dans notre code nous pouvons utiliser la fonction \verb+void logMessage(int level, const char* format, ...);+ pour logger un message en spécifiant son niveau et en utilisant une syntaxe similaire à \verb+printf(...)+ ensuite.
+\inputminted[breaklines,breaksymbol=, frame=single, stepnumber=5,tabsize=2]{C}{../src/Logger.h}
 \subsubsection{SysCall}
+Nous avons un fichier regroupant des fonctions wrappers pour les appels systèmes que nous utilisons dans les différentes parties de notre programme. De ce fait, si nous voulons porter notre programme sur un autre système, nous avons juste à modifier le contenu de ces fonctions pour adapter ces appels systèmes.
 \subsection{Engine}
 \subsubsection{Search}
 \subsubsection{Parser}
 \subsubsection{Linker}
 \subsubsection{Daemonizer}
 \subsection{SmartFolder}
+
+\section{Utilisation du programme}
+\subsection{Syntaxe de recherche}
 
 
 
