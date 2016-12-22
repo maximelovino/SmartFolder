@@ -24,13 +24,11 @@ Hello world
 \subsection{Data Structures}
 \subsubsection{List}
 Nous avons une structure de liste qui sert à stocker la liste des résultats d'une recherhe (liste de fichiers). Nous définissions des fonctions permettant d'agréer plusieurs listes au travers d'une union, intersection, etc... correspondant aux opérations booléennes classiques.
-\inputminted[breaklines,breaksymbol=, frame=single, stepnumber=5,tabsize=2]{C}{../src/List.h}
 \subsubsection{HashSet}
 Nous avons une structure de table de hachage permettant de stocker les matches actuels présent dans le dossier, cela nous permet lors du prochain run de la recherche de tester de façon rapide (recherche en $O(1)$ en général et maximum en $\Theta(n)$).
-\inputminted[breaklines,breaksymbol=, frame=single, stepnumber=5,tabsize=2]{C}{../src/HashSet.h}
 \subsubsection{Stack}
 Nous utilisons une structure de Pile pour stocker les résultats d'une recherche particulière (on stocke un pointeur de la liste des résultats) pour ensuite les rassembler lorsque nous trouvons un opérateur booléen. (principe de l'évaluation d'une expression polonaise inverse)
-\inputminted[breaklines,breaksymbol=, frame=single, stepnumber=5,tabsize=2]{C}{../src/Stack.h}
+\newpage
 \subsection{Utils}
 \subsubsection{Logger}
 Nous avons réalisé un Logger pour pouvoir afficher sur la console des messages de notre programme, pour ceci nous définissons 3 niveaux de severité pour un message:
@@ -42,18 +40,19 @@ Nous avons réalisé un Logger pour pouvoir afficher sur la console des messages
 Dans le fichier \verb+Logger.h+ on peut changer la valeur du \verb+#define LOG_LEVEL X+ par le niveau minimal que l'on veut. C'est-à-dire que si nous définissons 1 ici, le logger affichera uniquement les messages de niveau 1 et 2. \\
 
 Dans notre code nous pouvons utiliser la fonction \verb+void logMessage(int level, const char* format, ...);+ pour logger un message en spécifiant son niveau et en utilisant une syntaxe similaire à \verb+printf(...)+ ensuite.
-\inputminted[breaklines,breaksymbol=, frame=single, stepnumber=5,tabsize=2]{C}{../src/Logger.h}
 \subsubsection{SysCall}
 Nous avons un fichier regroupant des fonctions wrappers pour les appels systèmes que nous utilisons dans les différentes parties de notre programme. De ce fait, si nous voulons porter notre programme sur un autre système, nous avons juste à modifier le contenu de ces fonctions pour adapter ces appels systèmes.
 \subsection{Engine}
 \subsubsection{Search}
 Dans la partie recherche nous avons la fonction qui va effectuer une recherche d'un certain type avec un certain argument de recherche dans un dossier et va retourner une liste des résultats de cette recherche. Nous définissons les types de recherche possible dans une énumération. Nous passons à la fonction le dossier à chercher, le type de recherche et l'argument de la recherche en question.
-\inputminted[breaklines,breaksymbol=, frame=single, stepnumber=5,tabsize=2]{C}{../src/Search.h}
 \subsubsection{Parser}
-Ici nous avons la grande partie du programme, avec principalement la fonction \verb+int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** result)+ qui va analyser la query passée en paramètre au programme (sous forme polonaise inverse) et l'éxecuter en stockant les résulats dans le HashSet \verb+result+.
+Ici nous avons la grande partie du programme, avec principalement la fonction
+\begin{verbatim}
+	int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** result)
+\end{verbatim}
+qui va analyser la query passée en paramètre au programme (sous forme polonaise inverse) et l'éxecuter en stockant les résulats dans le HashSet \verb+result+.
 
 Nous avons également d'autres fonctions permettant de vérifier si une fragment de recherche est valide, détecter des opérateurs booléens, recupérer l'UID d'un nom d'utilisateur ainsi que vérifier que le chemin d'accès du dossier est valide. Pour cette dernière, nous utilisons une RegExp en utilisant \verb+Regex.h+ pour computer la regex.
-\inputminted[breaklines,breaksymbol=, frame=single, stepnumber=5,tabsize=2]{C}{../src/Parser.h}
 \subsubsection{Linker}
 Le Linker sert à créer un lien symbolique vers un fichier dans le dossier de destination, il va s'occuper de créer un symlink avec le nom du fichier et gérer les collisions de noms le cas échéant (par exemple \verb+./a.txt+ et \verb+./abc/a.txt+ vont donner des symLink \verb+a.txt+ et \verb+a(1).txt+)
 \subsubsection{Daemonizer}
