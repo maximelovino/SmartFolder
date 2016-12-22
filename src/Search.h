@@ -22,5 +22,4 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg);
  * @return    -1 if t1 < t2, 0 if t1 = t2 and 1 if t1 > t2
  */
 int timeCompare(struct timespec* t1, struct timespec* t2);
-//This file may also contain comparators functions for mode, time etc..
 #endif /* end of include guard: _SEARCH_H_ */

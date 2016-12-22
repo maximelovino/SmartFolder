@@ -1,6 +1,7 @@
 # Search specs
 
 ## Search arguments
+- `--name <name>`
 - `--size [-+]<size>`
 - `--dateStatus [-+]<YYYY-MM-DD>`
 - `--dateModified [-+]<YYYY-MM-DD>`
