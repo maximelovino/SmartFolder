@@ -29,21 +29,16 @@ void expand(HashSet** table){
 
 void put(HashSet** table, char* filePath){
 	if ((*table)->filled >= 0.8 * (*table)->size) {
-		printf("We need to expand\n");
+		//printf("We need to expand\n");
 		expand(table);
-	}else{
-		printf("%d\n",(*table)->filled);
-		printf("%f\n", 0.8 * (*table)->size);
 	}
+
 	int hashValue = hash(filePath) % (*table)->size;
-	printf("%s, initial hash %d\n", filePath, hashValue);
-	printf("%s has a hash of %d, at that case there is %s\n", filePath, hashValue, (*table)->table[hashValue]);
 	//TODO There has to be a better way
 	while ((*table)->table[hashValue] != 0 || ((*table)->table[hashValue] != 0 && strcmp((*table)->table[hashValue], " ") == 0)) {
 		hashValue++;
 		hashValue %= (*table)->size;
 	}
-	printf("%s put at %d\n", filePath, hashValue );
 	(*table)->table[hashValue] = malloc(strlen(filePath));
 	strcpy((*table)->table[hashValue], filePath);
 	(*table)->filled++;

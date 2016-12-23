@@ -1,6 +1,7 @@
 #include "List.h"
 #include <stdlib.h>
 #include <string.h>
+#include "Logger.h"
 
 List* initList() {
     List* l = malloc(sizeof(List));
@@ -131,4 +132,12 @@ void deleteList(List* l) {
         l->head = next;
     }
     free(l);
+}
+
+void dumpList(List* l) {
+  ListElement* le = l->head;
+  for (int i = 0; i < l->size; i++) {
+    logMessage(0, "At index %i value %s: ", i, le->data);
+    le = le->next;
+  }
 }

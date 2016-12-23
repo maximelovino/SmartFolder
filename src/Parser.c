@@ -44,41 +44,41 @@ struct timespec* getTimeSpec(char* date) {
 }
 
 searchType getSearchType(char* param, char* arg) {
-    if(strcmp(param, "--name")) {
+    if(strcmp(param, "--name") == 0) {
         return NAME;
-    } else if(strcmp(param, "--size")) {
+    } else if(strcmp(param, "--size") == 0) {
         if(arg[0] == '+')
             return SIZE_BIGGER;
         else if(arg[0] == '-')
             return SIZE_SMALLER;
         else
             return SIZE_EQUAL;
-    } else if(strcmp(param, "--dateStatus")) {
+    } else if(strcmp(param, "--dateStatus") == 0) {
         if(arg[0] == '+')
             return STATUS_DATE_A;
         else if(arg[0] == '-')
             return STATUS_DATE_B;
         else
             return STATUS_DATE_E;
-    } else if(strcmp(param, "--dateModified")) {
+    } else if(strcmp(param, "--dateModified") == 0) {
         if(arg[0] == '+')
             return MODIF_DATE_A;
         else if(arg[0] == '-')
             return MODIF_DATE_B;
         else
             return MODIF_DATE_E;
-    } else if(strcmp(param, "--dateUsed")) {
+    } else if(strcmp(param, "--dateUsed") == 0) {
         if(arg[0] == '+')
             return USAGE_DATE_A;
         else if(arg[0] == '-')
             return USAGE_DATE_B;
         else
             return USAGE_DATE_E;
-    } else if(strcmp(param, "--uid")) {
+    } else if(strcmp(param, "--uid") == 0) {
         return OWNER;
-    } else if(strcmp(param, "--gid")) {
+    } else if(strcmp(param, "--gid") == 0) {
         return GROUP;
-    } else if(strcmp(param, "--perms")) {
+    } else if(strcmp(param, "--perms") == 0) {
         return MODE;
     }
     return -1;
@@ -127,9 +127,9 @@ int isValidSearch(searchType st, char* arg) {
 }
 
 //TODO add test for the NOT boolean operator
-int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** result) {
+int evaluateAndSearch(char** expression, int exprLen, char* folder, List** result) {
     Stack* s = initStack();
-    for (int i = 0; i < exprLen;) {
+    for (int i = 0; i < exprLen; i+=2) {
         char* p1 = expression[i];
         if(!isBooleanOp(p1)) {
             searchType st = getSearchType(p1, expression[i+1]);
@@ -141,17 +141,22 @@ int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** re
                 return -1;
             }
 
-            i += 2;
         } else {
             List* l1 = pop(s);
-            List* l2 = pop(s);
+            List* l2 = NULL;
             List* l3 = NULL;
             if(strcmp(p1, "and") == 0) {
+                l2 = pop(s);
                 l3 = listIntersect(l1, l2);
             } else if(strcmp(p1, "or") == 0) {
+                l2 = pop(s);
                 l3 = listUnion(l1, l2);
-            } else {
-                logMessage(3, "%s", "Operator not supported");
+            } else if(strcmp(p1, "xor") == 0) {
+                l2 = pop(s);
+                l3 = listXOR(l1, l2);
+            } else if(strcmp(p1, "not") == 0){
+                l2 = searchDirectory(folder, -1, NULL);
+                l3 = listComplement(l2, l1);
             }
             deleteList(l1);
             deleteList(l2);
@@ -159,19 +164,16 @@ int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** re
             i++;
         }
     }
-    List* final = pop(s);
-    while(final->head != NULL) {
-        char* e0 = get(final, 0);
-        removeIndex(final, 0);
-        put(result, e0);
-    }
+    *(result) = pop(s);
     return 0;
 }
 
 char* trimArgument(searchType st, char* arg) {
     if(st == SIZE_BIGGER || st == SIZE_SMALLER || st == STATUS_DATE_B || st == STATUS_DATE_A || st == MODIF_DATE_B || st == MODIF_DATE_A || st == USAGE_DATE_B || st == USAGE_DATE_A) {
-        char* narg = malloc(strlen(arg));
-        strcpy(narg, &(arg[1]));
+        int s = strlen(arg);
+        char* narg = malloc(s);
+        memcpy(narg, &(arg[1]), s-1);
+        narg[s] = 0;
         return narg;
     }
     return arg;

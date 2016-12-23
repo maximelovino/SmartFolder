@@ -21,6 +21,7 @@ List* listUnion(List* l1, List* l2);
 List* listIntersect(List* l1, List* l2);
 List* listXOR(List* l1, List* l2);
 List* listComplement(List* l1, List* l2);
+void dumpList(List* l);
 void deleteList(List* l);
 
 #endif /* end of include guard: _LIST_H_ */

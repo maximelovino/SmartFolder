@@ -30,7 +30,7 @@ Logger.o: Logger.c Logger.h
 TestLogger.o: TestLogger.c
 	$(CC) $(FLAGS) $<
 
-TestSearch: TestSearch.o Search.o List.o
+TestSearch: TestSearch.o Search.o List.o Logger.o
 	$(CC) $^ -o $@ $(LINKFLAGS)
 
 TestSearch.o: TestSearch.c
@@ -66,13 +66,13 @@ TestStack.o: TestStack.c
 Stack.o: Stack.c Stack.h
 	$(CC) $(FLAGS) $<
 
-TestList: TestList.o  List.o
+TestList: TestList.o  List.o Logger.o
 	$(CC) $^ -o $@ $(LINKFLAGS)
 
 TestList.o: TestList.c
 		$(CC) $(FLAGS) $<
 
-List.o: List.c List.h
+List.o: List.c List.h Logger.o
 	$(CC) $(FLAGS) $<
 
 clean:

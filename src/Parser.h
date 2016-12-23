@@ -54,7 +54,7 @@ int isValidSearch(searchType st, char* arg);
  * @param  result     A map to put the result of the search
  * @return            0 if the search was ok, 1 otherwise
  */
-int evaluateAndSearch(char** expression, int exprLen, char* folder, HashSet** result);
+int evaluateAndSearch(char** expression, int exprLen, char* folder, List** result);
 
 /**
  * Removes the + or - before a search argument
