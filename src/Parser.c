@@ -86,7 +86,7 @@ searchType getSearchType(char* param, char* arg) {
 
 
 int isBooleanOp(char* word) {
-    return (strcmp(word, "and") & strcmp(word, "or") & strcmp(word, "not") & strcmp(word, "xor")) == 0;
+    return (strcmp(word, "and") & strcmp(word, "AND") & strcmp(word, "or") & strcmp(word, "OR") & strcmp(word, "not") & strcmp(word, "NOT") & strcmp(word, "xor") & strcmp(word, "XOR")) == 0;
 }
 
 int isValidSearch(searchType st, char* arg) {
@@ -145,16 +145,16 @@ int evaluateAndSearch(char** expression, int exprLen, char* folder, List** resul
             List* l1 = pop(s);
             List* l2 = NULL;
             List* l3 = NULL;
-            if(strcmp(p1, "and") == 0) {
+            if(strcmp(p1, "and") == 0 || strcmp(p1, "AND") == 0) {
                 l2 = pop(s);
                 l3 = listIntersect(l1, l2);
-            } else if(strcmp(p1, "or") == 0) {
+            } else if(strcmp(p1, "or") == 0 || strcmp(p1, "OR") == 0) {
                 l2 = pop(s);
                 l3 = listUnion(l1, l2);
-            } else if(strcmp(p1, "xor") == 0) {
+            } else if(strcmp(p1, "xor") == 0 || strcmp(p1, "XOR") == 0) {
                 l2 = pop(s);
                 l3 = listXOR(l1, l2);
-            } else if(strcmp(p1, "not") == 0){
+            } else if(strcmp(p1, "not") == 0 || strcmp(p1, "NOT") == 0){
                 l2 = searchDirectory(folder, -1, NULL);
                 l3 = listComplement(l2, l1);
             }
