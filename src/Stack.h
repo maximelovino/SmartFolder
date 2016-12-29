@@ -1,6 +1,8 @@
 #ifndef _STACK_H_
 #define _STACK_H_
 
+#include "Logger.h"
+
 typedef struct stackElement_st {
     struct stackElement_st* next;
     void* value;

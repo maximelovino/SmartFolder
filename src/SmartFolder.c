@@ -18,6 +18,8 @@ int main(int argc, char const *argv[]) {
         }
     } else if(argc == 2 && strcmp(argv[1], "-d") == 0) {
         //delete folder (bonus feature)
+    }else{
+      printf("Usage: SmartFolder <LinkDirectory> <SearchDirectory> [searchExpression]\n");
     }
 
     return 0;

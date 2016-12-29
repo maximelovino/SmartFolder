@@ -57,7 +57,7 @@ TestHashSet.o: TestHashSet.c
 HashSet.o: HashSet.c HashSet.h
 	$(CC) $(FLAGS) $<
 
-TestStack: TestStack.o  Stack.o
+TestStack: TestStack.o  Stack.o Logger.o
 	$(CC) $^ -o $@ $(LINKFLAGS)
 
 TestStack.o: TestStack.c

@@ -25,6 +25,7 @@ void* pop(Stack* s) {
         s->size--;
         return element;
     }
+    logMessage(1, "The stack is empty, so you're popping NULL");
     return NULL;
 }
 
