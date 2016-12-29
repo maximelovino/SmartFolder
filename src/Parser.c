@@ -161,7 +161,7 @@ int evaluateAndSearch(char** expression, int exprLen, char* folder, List** resul
             deleteList(l1);
             deleteList(l2);
             push(s, l3);
-            i++;
+            i--;
         }
     }
     *(result) = pop(s);
