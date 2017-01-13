@@ -11,3 +11,11 @@ int symbolicLink(char* target, char* linkPath){
 char* nameOfFile(char* fullPath){
   return basename(fullPath);
 }
+
+int makeDir(char* path) {
+  return mkdir(path, 0775);
+}
+
+FILE* touch(char* file) {
+  return fopen(file, "w+");
+}

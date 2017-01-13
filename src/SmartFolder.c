@@ -1,6 +1,7 @@
 #include "Syscall.h"
 #include "Parser.h"
 #include "List.h"
+#include "Linker.h"
 #include <stdio.h>
 
 int main(int argc, char const *argv[]) {
@@ -15,6 +16,16 @@ int main(int argc, char const *argv[]) {
               logMessage(2, "Error while checking");
             }
             dumpList(files);
+            if(makeFolder(argv[1], files) == 0) {
+              int pid = processFork();
+              if(pid == 0) {
+
+              } else if(pid > 0) {
+                createSysFile(pid, argv[1]);
+              }
+            } else {
+              logMessage(3, "Couldn't create SmartFolder");
+            }
         }
     } else if(argc == 2 && strcmp(argv[1], "-d") == 0) {
         //delete folder (bonus feature)

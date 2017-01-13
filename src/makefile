@@ -1,7 +1,7 @@
 CC=gcc
 FLAGS= -Wall -Wextra -std=gnu99 -c -g
 DS=HashSet.o List.o Stack.o
-BD=Logger.o Syscall.o Search.o
+BD=Logger.o Syscall.o Search.o Linker.o SysFile.o
 LINKFLAGS= -lrt
 
 all: TestHashSet TestStack TestList TestSearch TestParser TestLogger SmartFolder TestLinker
@@ -73,6 +73,9 @@ TestList.o: TestList.c
 		$(CC) $(FLAGS) $<
 
 List.o: List.c List.h Logger.o
+	$(CC) $(FLAGS) $<
+
+SysFile.o: SysFile.c SysFile.h
 	$(CC) $(FLAGS) $<
 
 clean:
