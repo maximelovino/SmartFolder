@@ -4,7 +4,15 @@ void logMessage(int level, const char* format, ...){
 	if (level >= LOG_LEVEL) {
 		va_list args;
 		va_start(args, format);
-		printf("%s", level == 0 ? "[INFO]" : level == 1 ? "[WARNING]" : "[FATAL]");
+		if (level == 0) {
+			printf("%s", "[INFO]" );
+		}else if (level == 1){
+			printf("%s", "[WARNING]");
+		}else if (level == 2){
+			printf("%s", "[FATAL]");
+		}else{
+			printf("%s", "[OTHER]");
+		}
 		vprintf(format, args);
 		printf("\n");
 		va_end(args);
