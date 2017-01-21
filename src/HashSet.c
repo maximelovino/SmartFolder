@@ -4,44 +4,51 @@
 #include <string.h>
 #include "HashSet.h"
 
-void initSet(HashSet* table, int size){
-	if (table == NULL) {
-		return;
-	}
+HashSet* initSet(int size){
+	HashSet* table = malloc(sizeof(HashSet));
 	table->table = calloc(size, sizeof(char*));
 	table->size = size;
 	table->filled = 0;
+	return table;
 }
 
-void expand(HashSet** table){
-	HashSet* newTable = malloc(sizeof(HashSet));
-
-	initSet(newTable, (*table)->size * 2);
-
-	for (int i = 0; i < (*table)->size; i++) {
-		if ((*table)->table[i] != NULL && strcmp((*table)->table[i], " ") != 0) {
-			put(&newTable, (*table)->table[i]);
+void expand(HashSet* table){
+	char** oldTable = table->table;
+	table->table = calloc(2*table->size, sizeof(char*));
+	int size = table->size;
+	table->size = 2*table->size;
+	table->filled = 0;
+	for (int i = 0; i < size; i++) {
+		if (oldTable[i] != NULL && strcmp(oldTable[i], " ") != 0) {
+			put(table, oldTable[i]);;
 		}
 	}
-	deleteSet(table);
-	*table = newTable;
 }
 
-void put(HashSet** table, char* filePath){
-	if ((*table)->filled >= 0.8 * (*table)->size) {
+
+void putAll(HashSet* table, List* list) {
+	ListElement* le = list->head;
+	while(le != NULL) {
+		put(table, le->data);
+		le = le->next;
+	}
+}
+
+void put(HashSet* table, char* filePath){
+	if (table->filled >= 0.8 * table->size) {
 		//printf("We need to expand\n");
 		expand(table);
 	}
 
-	int hashValue = hash(filePath) % (*table)->size;
+	int hashValue = hash(filePath) % table->size;
 	//TODO There has to be a better way
-	while ((*table)->table[hashValue] != 0 || ((*table)->table[hashValue] != 0 && strcmp((*table)->table[hashValue], " ") == 0)) {
+	while (table->table[hashValue] != 0 || (table->table[hashValue] != 0 && strcmp(table->table[hashValue], " ") == 0)) {
 		hashValue++;
-		hashValue %= (*table)->size;
+		hashValue %= table->size;
 	}
-	(*table)->table[hashValue] = malloc(strlen(filePath));
-	strcpy((*table)->table[hashValue], filePath);
-	(*table)->filled++;
+	table->table[hashValue] = malloc(strlen(filePath));
+	strcpy(table->table[hashValue], filePath);
+	table->filled++;
 }
 void removeFromSet(HashSet* table, char* filePath){
 	int index = searchInSet(table, filePath);

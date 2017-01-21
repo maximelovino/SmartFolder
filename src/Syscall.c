@@ -19,3 +19,6 @@ int makeDir(char* path) {
 FILE* touch(char* file) {
   return fopen(file, "w+");
 }
+int fileExists(char* path) {
+  return access(path, F_OK) != -1;
+}

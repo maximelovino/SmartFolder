@@ -2,6 +2,8 @@
 #include "Parser.h"
 #include "List.h"
 #include "Linker.h"
+#include "Deamon.h"
+#include "HashSet.h"
 #include <stdio.h>
 
 int main(int argc, char const *argv[]) {
@@ -16,12 +18,18 @@ int main(int argc, char const *argv[]) {
               logMessage(2, "Error while checking");
             }
             dumpList(files);
+
             if(makeFolder(argv[1], files) == 0) {
               int pid = processFork();
               if(pid == 0) {
-
+                //the optimal size of a hashset is n²
+                HashSet* set = initSet(files->size*files->size);
+                putAll(set, files);
+                incrementalSearch(&(argv[3]), argc-3, argv[2], argv[1], set);
               } else if(pid > 0) {
-                createSysFile(pid, argv[1]);
+                if(!createSysFile(pid, argv[1])) {
+                  logMessage(3, "A smartFolder with this name already exists");
+                }
               }
             } else {
               logMessage(3, "Couldn't create SmartFolder");

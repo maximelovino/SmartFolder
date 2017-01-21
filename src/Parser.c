@@ -126,7 +126,6 @@ int isValidSearch(searchType st, char* arg) {
     return 0;
 }
 
-//TODO add test for the NOT boolean operator
 int evaluateAndSearch(char** expression, int exprLen, char* folder, List** result) {
     Stack* s = initStack();
     for (int i = 0; i < exprLen; i+=2) {

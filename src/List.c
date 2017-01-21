@@ -126,6 +126,8 @@ List* listComplement(List* l1, List* l2){
 }
 
 void deleteList(List* l) {
+    if(l == NULL)
+      return;
     while (l->head) {
         ListElement* next = l->head->next;
         free(l->head);

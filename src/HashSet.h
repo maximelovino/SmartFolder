@@ -1,6 +1,7 @@
 #ifndef _HASH_SET_
 #define _HASH_SET_
 #include "Logger.h"
+#include "List.h"
 
 typedef struct HashSet {
 	char** table;
@@ -9,9 +10,10 @@ typedef struct HashSet {
 } HashSet;
 
 
-void initSet(HashSet* table, int size);
-void expand(HashSet** table);
-void put(HashSet** table, char* filePath);
+HashSet* initSet(int size);
+void putAll(HashSet* table, List* list);
+void expand(HashSet* table);
+void put(HashSet* table, char* filePath);
 void removeFromSet(HashSet* table, char* filePath);
 int contains(HashSet* table, char* filePath);
 int searchInSet(HashSet* table, char* filePath);

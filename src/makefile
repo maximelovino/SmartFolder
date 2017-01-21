@@ -1,7 +1,7 @@
 CC=gcc
 FLAGS= -Wall -Wextra -std=gnu99 -c -g
 DS=HashSet.o List.o Stack.o
-BD=Logger.o Syscall.o Search.o Linker.o SysFile.o
+BD=Logger.o Syscall.o Search.o Linker.o SysFile.o Deamon.o
 LINKFLAGS= -lrt
 
 all: TestHashSet TestStack TestList TestSearch TestParser TestLogger SmartFolder TestLinker
