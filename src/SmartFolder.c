@@ -4,6 +4,7 @@
 #include "Linker.h"
 #include "Deamon.h"
 #include "HashSet.h"
+#include "SysFile.h"
 #include <stdio.h>
 
 int main(int argc, char const *argv[]) {
@@ -27,6 +28,7 @@ int main(int argc, char const *argv[]) {
                 putAll(set, files);
                 incrementalSearch(&(argv[3]), argc-3, argv[2], argv[1], set);
               } else if(pid > 0) {
+                  logMessage(0,"The child is at process %d", pid);
                 if(!createSysFile(pid, argv[1])) {
                   logMessage(3, "A smartFolder with this name already exists");
                 }

@@ -7,3 +7,6 @@ TestParser
 SmartFolder
 TestLogger
 TestLinker
+.idea/
+CMakeLists.txt
+cmake-build-debug/
