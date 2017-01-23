@@ -7,30 +7,36 @@
 #include "SysFile.h"
 #include <stdio.h>
 #include <signal.h>
+#include <limits.h>
+#include <stdlib.h>
 
 int main(int argc, char const *argv[]) {
 	//Parse parameters
 	if (argc > 3) {
 		if (isValidPath(argv[1]) && isValidPath(argv[2])) {
+			char* smartFolderPath[PATH_MAX+1];
+			char* searchPath[PATH_MAX+1];
+		  realpath(argv[1], smartFolderPath);
+		  realpath(argv[2], searchPath);
 			List set;
 			List *files = &set;
 			initList(files, 100);
-			int k = evaluateAndSearch(&(argv[3]), argc - 3, argv[2], &files);
+			int k = evaluateAndSearch(&(argv[3]), argc - 3, searchPath, &files);
 			if (k == -1) {
 				logMessage(2, "Error while checking");
 			}
 			dumpList(files);
 
-			if (makeFolder(argv[1], files) == 0) {
+			if (makeFolder(smartFolderPath, files) == 0) {
 				int pid = processFork();
 				if (pid == 0) {
 					//the optimal size of a hashset is n²
 					HashSet *set = initSet(files->size * files->size);
 					putAll(set, files);
-					incrementalSearch(&(argv[3]), argc - 3, argv[2], argv[1], set);
+					incrementalSearch(&(argv[3]), argc - 3, searchPath, smartFolderPath, set);
 				} else if (pid > 0) {
 					logMessage(0, "The child is at process %d", pid);
-					if (!createSysFile(pid, argv[1])) {
+					if (!createSysFile(pid, smartFolderPath)) {
 						logMessage(3, "A smartFolder with this name already exists");
 					}
 				}

@@ -46,7 +46,7 @@ void put(HashSet* table, char* filePath){
 		hashValue++;
 		hashValue %= table->size;
 	}
-	table->table[hashValue] = malloc(strlen(filePath));
+	table->table[hashValue] = malloc(strlen(filePath)+1);
 	strcpy(table->table[hashValue], filePath);
 	table->filled++;
 }

@@ -1,5 +1,6 @@
 #include "Search.h"
 #include "List.h"
+#include "Logger.h"
 #include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>
@@ -9,12 +10,13 @@
 
 List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 	List* result = initList();
+
 	DIR* dp;
 	struct dirent* entry;
 	struct stat statbuf;
 
 	if((dp = opendir(rootDir)) == NULL) {
-		fprintf(stderr, "Couldn't open directory %s\n", rootDir);
+		logMessage(3, "Couldn't open directory %s\n", rootDir);
 		return NULL;
 	}
 	chdir(rootDir);
@@ -137,6 +139,7 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 	}
 	chdir("..");
 	closedir(dp);
+
 	return result;
 }
 

@@ -11,21 +11,26 @@ void incrementalSearch(char **expression, int exprLen, char *searchFolder, char 
 		exit(EXIT_FAILURE);
 	}
 	dumpSet(files);
+
 	while (1) {
 		List *result = initList();
 		evaluateAndSearch(expression, exprLen, searchFolder, &result);
+
 		ListElement *tmp = result->head;
 		while (tmp) {
 			if (!contains(files, tmp->data)) {
 				logMessage(0, "New file found: %s", tmp->data);
 				put(files, tmp->data);
 				makeLink(tmp->data, smartFolder);
+				//dumpSet(files);
 			}
 			tmp = tmp->next;
 		}
-		free(result);
+
+		deleteList(result);
 		sleep(5);
 	}
+
 }
 
 
