@@ -46,7 +46,8 @@ int main(int argc, char const *argv[]) {
 		}
 	} else if (argc == 3 && strcmp(argv[1], "-d") == 0) {
 		//delete folder (bonus feature)
-		char pathTmpFile[1024] = "/tmp/";
+		char pathTmpFile[1024];
+		strcpy(pathTmpFile,SYSFILE_PATH);
 		strcat(pathTmpFile, argv[2]);
 		logMessage(0, "The file to open is %s", pathTmpFile);
 		FILE *tmpFile = fopen(pathTmpFile, "r");
@@ -60,15 +61,30 @@ int main(int argc, char const *argv[]) {
 		if (getline(&line,&size,tmpFile)!=-1){
 			pidToKill = atoi(line);
 			logMessage(0, "The folder is at pid %d", pidToKill);
-			kill(pidToKill,SIGINT);
+			kill(pidToKill,SIGKILL);
 		}
 
+		fclose(tmpFile);
+		if (removeFile(pathTmpFile) == -1){
+			logMessage(2,"Couldn't delete file %s", pathTmpFile);
+			_exit(1);
+		}else{
+			logMessage(0, "File deleted %s", pathTmpFile);
+		}
+		char secondFile[1024];
+		strcpy(secondFile,SYSFILE_PATH);
+		strcat(secondFile,line);
+		if (removeFile(secondFile) == -1){
+			logMessage(2,"Couldn't delete file %s", secondFile);
+			_exit(1);
+		}else{
+			logMessage(0, "File deleted %s", secondFile);
+		}
 		if(line){
 			free(line);
 		}
-		fclose(tmpFile);
 	} else {
-		printf("Usage: SmartFolder <LinkDirectory> <SearchDirectory> [searchExpression]\n");
+		printf("Usage:\nSmartFolder <LinkDirectory> <SearchDirectory> [searchExpression]\nSmartFolder -d <RunningFolder>\n");
 	}
 
 	return 0;

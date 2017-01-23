@@ -12,4 +12,5 @@ int makeDir(char* path);
 char* nameOfFile(char* fullPath);
 FILE* touch(char* file);
 int fileExists(char* path);
+int removeFile(char* file);
 #endif /* end of include guard: _SYSCALL_H_ */

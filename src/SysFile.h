@@ -8,6 +8,5 @@
 #include "Logger.h"
 
 int createSysFile(int pid, char* smartFolder);
-int deleteSysFile(int pid);
 
 #endif /* end of include guard: _SYSFILE_H_ */
