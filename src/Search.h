@@ -1,7 +1,12 @@
 #ifndef _SEARCH_H_
 #define _SEARCH_H_
-#include "List.h"
+
 #include <sys/stat.h>
+#include <dirent.h>
+#include <stdlib.h>
+#include <string.h>
+#include "Logger.h"
+#include "List.h"
 
 
 typedef enum {NAME, SIZE_SMALLER, SIZE_EQUAL, SIZE_BIGGER, STATUS_DATE_B, STATUS_DATE_E, STATUS_DATE_A, MODIF_DATE_B, MODIF_DATE_E, MODIF_DATE_A, USAGE_DATE_B, USAGE_DATE_E, USAGE_DATE_A, OWNER, GROUP, MODE} searchType;

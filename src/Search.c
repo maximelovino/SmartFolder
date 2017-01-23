@@ -1,12 +1,4 @@
 #include "Search.h"
-#include "List.h"
-#include "Logger.h"
-#include <sys/stat.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 	List* result = initList();

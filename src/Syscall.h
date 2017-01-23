@@ -13,4 +13,5 @@ char* nameOfFile(char* fullPath);
 FILE* touch(char* file);
 int fileExists(char* path);
 int removeFile(char* file);
+int removeDirectory(char* path);
 #endif /* end of include guard: _SYSCALL_H_ */

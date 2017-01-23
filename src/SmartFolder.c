@@ -74,12 +74,20 @@ int main(int argc, char const *argv[]) {
 		char secondFile[1024];
 		strcpy(secondFile,SYSFILE_PATH);
 		strcat(secondFile,line);
+		logMessage(0, "Second file is %s", secondFile);
+		FILE* secondFP = fopen(secondFile, "r");
+		if (getline(&line,&size,secondFP)!=-1){
+			logMessage(0, "Starting removal of folder %s",line);
+			removeFolder(line);
+		}
+		fclose(secondFP);
 		if (removeFile(secondFile) == -1){
 			logMessage(2,"Couldn't delete file %s", secondFile);
 			_exit(1);
 		}else{
 			logMessage(0, "File deleted %s", secondFile);
 		}
+
 		if(line){
 			free(line);
 		}

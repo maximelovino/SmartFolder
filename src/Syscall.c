@@ -30,3 +30,6 @@ int removeFile(char *file) {
 	}
 	return -1;
 }
+int removeDirectory(char* path){
+	return rmdir(path);
+}
