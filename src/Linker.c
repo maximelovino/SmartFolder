@@ -2,7 +2,7 @@
 
 int makeLink(char* pathToLink, char* destFolder){
   char* fileName = nameOfFile(pathToLink);
-  char* linkName = malloc(strlen(destFolder)+strlen(fileName)+1);
+  char linkName[1024];
   strcpy(linkName, destFolder);
   strcat(linkName, "/");
   strcat(linkName, fileName);

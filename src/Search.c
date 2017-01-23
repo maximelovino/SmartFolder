@@ -22,6 +22,7 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 	chdir(rootDir);
 	while ((entry = readdir(dp)) != NULL) {
 		lstat(entry->d_name, &statbuf);
+		if (S_ISLNK(statbuf.st_mode)) continue;
 		if(S_ISDIR(statbuf.st_mode)) {
 			if(strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0) {
 				continue;

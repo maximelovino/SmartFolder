@@ -36,7 +36,28 @@ void incrementalSearch(char **expression, int exprLen, char *searchFolder, char 
 
 void handler(int signum) {
 	if (signum == SIGINT){
-		//Do the deletion and _exit the program
+		char pathTmpFile[1024] = "/tmp/";
+		char pidVal[64];
+		sprintf(pidVal,"%d",getpid());
+		strcat(pathTmpFile, pidVal);
+		logMessage(0, "The file to open is %s", pathTmpFile);
+		FILE *tmpFile = fopen(pathTmpFile, "r");
+		if (!tmpFile) {
+			logMessage(3, "A smartFolder with this process doesn't exist");
+			_exit(1);
+		}
+		char* line = NULL;
+		unsigned int size = 0;
+		char pathOfFolder[1024];
+		if (getline(&line,&size,tmpFile)!=-1){
+			strcpy(pathOfFolder,line);
+			logMessage(0, "The path is %s", pathOfFolder);
+		}
+
+		if(line){
+			free(line);
+		}
+		fclose(tmpFile);
 		_exit(0);
 	}
 }
