@@ -11,10 +11,10 @@ int createSysFile(int pid, char *smartFolder) {
 	strcpy(path, SYSFILE_PATH);
 	strcat(path, name + 1);
 	logMessage(0, path);
-	if (!fileExists(path) && !fileExists(pathPIDFile)) {
-		FILE* pidFp = touch(pathPIDFile);
-		fprintf(pidFp, smartFolder);
-		FILE *fp = touch(path);
+	if (!saccess(path) && !saccess(pathPIDFile)) {
+		FILE* pidFp = stouch(pathPIDFile);
+		fprintf(pidFp, "%s", smartFolder);
+		FILE *fp = stouch(path);
 		fprintf(fp, "%d", pid);
 		fclose(fp);
 		fclose(pidFp);

@@ -7,15 +7,15 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 	struct dirent* entry;
 	struct stat statbuf;
 	logMessage(0, "Root dir %s", rootDir);
-	if((dp = opendir(rootDir)) == NULL) {
+	if((dp = sopendir(rootDir)) == NULL) {
 		logMessage(3, "Couldn't open directory %s\n", rootDir);
 		return NULL;
 	}
-	chdir(rootDir);
-	while ((entry = readdir(dp)) != NULL) {
-		lstat(entry->d_name, &statbuf);
-		if (S_ISLNK(statbuf.st_mode)) continue;
-		if(S_ISDIR(statbuf.st_mode)) {
+	schdir(rootDir);
+	while ((entry = sreaddir(dp)) != NULL) {
+		slstat(entry->d_name, &statbuf);
+		if (sS_ISLNK(statbuf.st_mode)) continue;
+		if(sS_ISDIR(statbuf.st_mode)) {
 			if(strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0) {
 				continue;
 			}
@@ -36,102 +36,102 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 				case NAME:
 					searchString = (char*) searchArg;
 					if (strstr(entry->d_name, searchString)) {
-						insert(result, realpath(entry->d_name, NULL));
+						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case SIZE_BIGGER:
 					size = *((int*) searchArg);
 					if (statbuf.st_size > size) {
-						insert(result, realpath(entry->d_name, NULL));
+						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case SIZE_SMALLER:
 					size = *((int*) searchArg);
 					if (statbuf.st_size < size) {
-						insert(result, realpath(entry->d_name, NULL));
+						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case SIZE_EQUAL:
 					size = *((int*) searchArg);
 					if (statbuf.st_size == size) {
-						insert(result, realpath(entry->d_name, NULL));
+						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 
 				case STATUS_DATE_B:
                     if(timeCompare(&(statbuf.st_ctim), (struct timespec*)searchArg) == -1) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
                     break;
 				case MODIF_DATE_B:
                     if(timeCompare(&(statbuf.st_mtim), (struct timespec*)searchArg) == -1) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
                     break;
 				case USAGE_DATE_B:
                     if(timeCompare(&(statbuf.st_atim), (struct timespec*)searchArg) == -1) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
 					break;
 
 				case STATUS_DATE_E:
                     if(timeCompare(&(statbuf.st_ctim), (struct timespec*)searchArg) == 0) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
                     break;
 				case MODIF_DATE_E:
                     if(timeCompare(&(statbuf.st_mtim), (struct timespec*)searchArg) == 0) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
                     break;
 				case USAGE_DATE_E:
                     if(timeCompare(&(statbuf.st_atim), (struct timespec*)searchArg) == 0) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
 					break;
 
 				case STATUS_DATE_A:
                     if(timeCompare(&(statbuf.st_ctim), (struct timespec*)searchArg) == 1) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
 					break;
 				case MODIF_DATE_A:
                     if(timeCompare(&(statbuf.st_mtim), (struct timespec*)searchArg) == 1) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
 					break;
 				case USAGE_DATE_A:
                     if(timeCompare(&(statbuf.st_atim), (struct timespec*)searchArg) == 1) {
-                        insert(result, realpath(entry->d_name, NULL));
+                        insert(result, srealpath(entry->d_name, NULL));
                     }
 					break;
 				case OWNER:
 					uid = *((uid_t*) searchArg);
 					if (statbuf.st_uid == uid) {
-						insert(result, realpath(entry->d_name, NULL));
+						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case GROUP:
 					gid = *((gid_t*) searchArg);
 					if (statbuf.st_gid == gid) {
-						insert(result, realpath(entry->d_name, NULL));
+						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case MODE:
 					permissions = statbuf.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
 					//Here we take what's EQUAL to the permission we ask for
           if(permissions == (*(int*)searchArg)) {
-              insert(result, realpath(entry->d_name, NULL));
+              insert(result, srealpath(entry->d_name, NULL));
           }
 					break;
 				default:
-					insert(result, realpath(entry->d_name, NULL));
+					insert(result, srealpath(entry->d_name, NULL));
 					break;
 			}
 		}
 	}
-	chdir("..");
-	closedir(dp);
+	schdir("..");
+	sclosedir(dp);
 
 	return result;
 }

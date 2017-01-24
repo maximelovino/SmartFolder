@@ -17,7 +17,7 @@ int main(int argc, char const *argv[]) {
 			char *smartFolderPath[strlen(argv[1])];
 			char *searchPath;
 			strcpy(smartFolderPath, argv[1]);
-			searchPath = realpath(argv[2], NULL);
+			searchPath = srealpath(argv[2], NULL);
 			logMessage(0, "We search in %s => %s", argv[2], searchPath);
 			logMessage(0, "We put in %s => %s", argv[1], smartFolderPath);
 			List set;
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]) {
 			dumpList(files);
 
 			if (makeFolder(smartFolderPath, files) == 0) {
-				int pid = processFork();
+				int pid = sfork();
 				if (pid == 0) {
 					//the optimal size of a hashset is n²
 					HashSet *set = initSet(files->size * files->size);
@@ -67,7 +67,7 @@ int main(int argc, char const *argv[]) {
 		}
 
 		fclose(tmpFile);
-		if (removeFile(pathTmpFile) == -1) {
+		if (sunlink(pathTmpFile) == -1) {
 			logMessage(2, "Couldn't delete file %s", pathTmpFile);
 			_exit(1);
 		} else {
@@ -83,7 +83,7 @@ int main(int argc, char const *argv[]) {
 			removeFolder(line);
 		}
 		fclose(secondFP);
-		if (removeFile(secondFile) == -1) {
+		if (sunlink(secondFile) == -1) {
 			logMessage(2, "Couldn't delete file %s", secondFile);
 			_exit(1);
 		} else {

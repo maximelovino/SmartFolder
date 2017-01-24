@@ -184,9 +184,9 @@ void *prepareArgument(searchType st, char *arg) {
 		case USAGE_DATE_E:
 			return getTimeSpec(arg);
 		case OWNER:
-			return getUID(arg);
+			return sgetpwuid(arg);
 		case GROUP:
-			return getGID(arg);
+			return sgetgrgid(arg);
 		case SIZE_BIGGER:
 		case SIZE_EQUAL:
 		case SIZE_SMALLER:

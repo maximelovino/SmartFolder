@@ -18,7 +18,7 @@ TestParser: TestParser.o $(DS) $(BD) Parser.o
 TestLogger: TestLogger.o Logger.o
 	$(CC) $^ -o $@ $(LINKFLAGS)
 
-TestSearch: TestSearch.o Search.o List.o Logger.o
+TestSearch: TestSearch.o Search.o List.o Logger.o Syscall.o
 	$(CC) $^ -o $@ $(LINKFLAGS)
 
 TestLinker: TestLinker.o Linker.o Syscall.o Logger.o

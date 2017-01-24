@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Syscall.h"
 #include "Logger.h"
 #include "List.h"
 

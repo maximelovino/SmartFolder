@@ -1,43 +1,79 @@
 #include "Syscall.h"
 
-int processFork() {
+int sfork() {
 	return fork();
 }
 
-int symbolicLink(char *target, char *linkPath) {
+int ssymlink(char *target, char *linkPath) {
 	return symlink(target, linkPath);
 }
 
-char *nameOfFile(char *fullPath) {
+char *sbasename(char *fullPath) {
 	return basename(fullPath);
 }
 
-int makeDir(char *path) {
+int smkdir(char *path) {
 	return mkdir(path, 0775);
 }
 
-FILE *touch(char *file) {
+FILE *stouch(char *file) {
 	return fopen(file, "w+");
 }
 
-int fileExists(char *path) {
+int saccess(char *path) {
 	return access(path, F_OK) != -1;
 }
 
-int removeFile(char *file) {
-	if (fileExists(file)){
+int sunlink(char *file) {
+	if (saccess(file)){
 		return unlink(file);
 	}
 	return -1;
 }
-int removeDirectory(char* path){
+int srmdir(char* path){
 	return rmdir(path);
 }
 
-int getUID(char* userName) {
+int sgetpwuid(char* userName) {
 	return getpwnam(userName)->pw_uid;
 }
 
-int getGID(char* groupName) {
+int sgetgrgid(char* groupName) {
 	return getgrnam(groupName)->gr_gid;
+}
+
+int slstat(char* name, struct stat* statbuf) {
+	return lstat(name, statbuf);
+}
+
+DIR* sopendir(char* name) {
+	return opendir(name);
+}
+
+int schdir(char* name) {
+	return chdir(name);
+}
+
+int sclosedir(DIR* dp) {
+		return closedir(dp);
+}
+
+struct dirent* sreaddir(DIR* dir) {
+	return readdir(dir);
+}
+
+int sS_ISLNK(mode_t m) {
+	return S_ISLNK(m);
+}
+
+int sS_ISDIR(mode_t m) {
+	return S_ISDIR(m);
+}
+
+int sS_ISREG(mode_t m) {
+	return S_ISREG(m);
+}
+
+char* srealpath(char* p, char* buf) {
+	return realpath(p, buf);
 }

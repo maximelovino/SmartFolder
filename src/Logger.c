@@ -5,13 +5,13 @@ void logMessage(int level, const char* format, ...){
 		va_list args;
 		va_start(args, format);
 		if (level == 0) {
-			fprintf(stderr,"%s", "[INFO]" );
+			fprintf(stderr,"%s", "[DEBUG]" );
 		}else if (level == 1){
-			fprintf(stderr,"%s", "[WARNING]");
+			fprintf(stderr,"%s", "[INFO]");
 		}else if (level == 2){
-			fprintf(stderr,"%s", "[FATAL]");
+			fprintf(stderr,"%s", "[WARNING]");
 		}else{
-			fprintf(stderr,"%s", "[OTHER]");
+			fprintf(stderr,"%s", "[FATAL]");
 		}
 		vfprintf(stderr,format, args);
 		fprintf(stderr,"\n");
