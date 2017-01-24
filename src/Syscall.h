@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <libgen.h>
 #include <stdio.h>
+#include <pwd.h>
+#include <grp.h>
 
 int processFork();
 int symbolicLink(char* target, char* linkPath);
@@ -14,4 +16,6 @@ FILE* touch(char* file);
 int fileExists(char* path);
 int removeFile(char* file);
 int removeDirectory(char* path);
+int getUID(char* userName);
+int getGID(char* groupName);
 #endif /* end of include guard: _SYSCALL_H_ */

@@ -14,10 +14,12 @@ int main(int argc, char const *argv[]) {
 	//Parse parameters
 	if (argc > 3) {
 		if (isValidPath(argv[1]) && isValidPath(argv[2])) {
-			char* smartFolderPath[PATH_MAX+1];
-			char* searchPath[PATH_MAX+1];
-		  realpath(argv[1], smartFolderPath);
-		  realpath(argv[2], searchPath);
+			char *smartFolderPath[strlen(argv[1])];
+			char *searchPath;
+			strcpy(smartFolderPath, argv[1]);
+			searchPath = realpath(argv[2], NULL);
+			logMessage(0, "We search in %s => %s", argv[2], searchPath);
+			logMessage(0, "We put in %s => %s", argv[1], smartFolderPath);
 			List set;
 			List *files = &set;
 			initList(files, 100);
@@ -45,9 +47,9 @@ int main(int argc, char const *argv[]) {
 			}
 		}
 	} else if (argc == 3 && strcmp(argv[1], "-d") == 0) {
-		//delete folder (bonus feature)
+		//TODO modularize this code
 		char pathTmpFile[1024];
-		strcpy(pathTmpFile,SYSFILE_PATH);
+		strcpy(pathTmpFile, SYSFILE_PATH);
 		strcat(pathTmpFile, argv[2]);
 		logMessage(0, "The file to open is %s", pathTmpFile);
 		FILE *tmpFile = fopen(pathTmpFile, "r");
@@ -55,40 +57,40 @@ int main(int argc, char const *argv[]) {
 			logMessage(3, "A smartFolder with this name doesn't exist");
 			_exit(1);
 		}
-		char* line = NULL;
+		char *line = NULL;
 		unsigned int size = 0;
 		int pidToKill = 0;
-		if (getline(&line,&size,tmpFile)!=-1){
+		if (getline(&line, &size, tmpFile) != -1) {
 			pidToKill = atoi(line);
 			logMessage(0, "The folder is at pid %d", pidToKill);
-			kill(pidToKill,SIGKILL);
+			kill(pidToKill, SIGKILL);
 		}
 
 		fclose(tmpFile);
-		if (removeFile(pathTmpFile) == -1){
-			logMessage(2,"Couldn't delete file %s", pathTmpFile);
+		if (removeFile(pathTmpFile) == -1) {
+			logMessage(2, "Couldn't delete file %s", pathTmpFile);
 			_exit(1);
-		}else{
+		} else {
 			logMessage(0, "File deleted %s", pathTmpFile);
 		}
 		char secondFile[1024];
-		strcpy(secondFile,SYSFILE_PATH);
-		strcat(secondFile,line);
+		strcpy(secondFile, SYSFILE_PATH);
+		strcat(secondFile, line);
 		logMessage(0, "Second file is %s", secondFile);
-		FILE* secondFP = fopen(secondFile, "r");
-		if (getline(&line,&size,secondFP)!=-1){
-			logMessage(0, "Starting removal of folder %s",line);
+		FILE *secondFP = fopen(secondFile, "r");
+		if (getline(&line, &size, secondFP) != -1) {
+			logMessage(0, "Starting removal of folder %s", line);
 			removeFolder(line);
 		}
 		fclose(secondFP);
-		if (removeFile(secondFile) == -1){
-			logMessage(2,"Couldn't delete file %s", secondFile);
+		if (removeFile(secondFile) == -1) {
+			logMessage(2, "Couldn't delete file %s", secondFile);
 			_exit(1);
-		}else{
+		} else {
 			logMessage(0, "File deleted %s", secondFile);
 		}
 
-		if(line){
+		if (line) {
 			free(line);
 		}
 	} else {

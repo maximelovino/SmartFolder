@@ -5,8 +5,6 @@
 #define SECONDS_IN_DAY 86400
 #define FILE_PATH_REGEX "((\\.|\\.\\.)?\\/)?(([A-Z]|[a-z]|[0-9]| |-|_|'|\\.)+\\/?)+"
 #include <time.h>
-#include <pwd.h>
-#include <grp.h>
 #include <string.h>
 #include <regex.h>
 #include <stdlib.h>
@@ -16,11 +14,10 @@
 #include "List.h"
 #include "Stack.h"
 #include "Logger.h"
+#include "Syscall.h"
 #include <ctype.h>
 
 int isValidPath(char* path);
-int getUID(char* userName);
-int getGID(char* groupName);
 struct timespec* getTimeSpec(char* date);
 
 /**
@@ -55,6 +52,9 @@ int isValidSearch(searchType st, char* arg);
  * @return            0 if the search was ok, 1 otherwise
  */
 int evaluateAndSearch(char** expression, int exprLen, char* folder, List** result);
+
+void* prepareArgument(searchType st, char* arg);
+int getSize(char* sizeAsString);
 
 /**
  * Removes the + or - before a search argument

@@ -2,6 +2,7 @@
 #define _STACK_H_
 
 #include "Logger.h"
+#include <stdlib.h>
 
 typedef struct stackElement_st {
     struct stackElement_st* next;

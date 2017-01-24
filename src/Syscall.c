@@ -33,3 +33,11 @@ int removeFile(char *file) {
 int removeDirectory(char* path){
 	return rmdir(path);
 }
+
+int getUID(char* userName) {
+	return getpwnam(userName)->pw_uid;
+}
+
+int getGID(char* groupName) {
+	return getgrnam(groupName)->gr_gid;
+}

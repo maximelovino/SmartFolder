@@ -11,6 +11,7 @@ int makeLink(char *pathToLink, char *destFolder) {
 }
 
 int makeFolder(char *path, List *files) {
+	logMessage(0, "Dir we're creating is %s", path);
 	int r = makeDir(path);
 	if (r == -1) {
 		if (errno == EEXIST) {

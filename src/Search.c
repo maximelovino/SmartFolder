@@ -6,7 +6,7 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 	DIR* dp;
 	struct dirent* entry;
 	struct stat statbuf;
-
+	logMessage(0, "Root dir %s", rootDir);
 	if((dp = opendir(rootDir)) == NULL) {
 		logMessage(3, "Couldn't open directory %s\n", rootDir);
 		return NULL;
