@@ -1,6 +1,6 @@
 #ifndef _SEARCH_H_
 #define _SEARCH_H_
-
+#define SECONDS_IN_DAY 86400
 #include <sys/stat.h>
 #include <dirent.h>
 #include <stdlib.h>
@@ -21,11 +21,6 @@ typedef enum {NAME, SIZE_SMALLER, SIZE_EQUAL, SIZE_BIGGER, STATUS_DATE_B, STATUS
  */
 List* searchDirectory(char* rootDir, searchType type, void* searchArg);
 
-/**
- * Compares 2 timespecs
- * @param  t1 the first timespec
- * @param  t2 the second timespec
- * @return    -1 if t1 < t2, 0 if t1 = t2 and 1 if t1 > t2
- */
-int timeCompare(struct timespec* t1, struct timespec* t2);
+
+int timeCompare(struct timespec* candidate, struct timespec* searchTime);
 #endif /* end of include guard: _SEARCH_H_ */

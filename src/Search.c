@@ -28,9 +28,9 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 
 			int size;
 			char* searchString;
-			uid_t uid;
-			gid_t gid;
-			int permissions;
+			int uid;
+			int gid;
+			unsigned long perms;
 
 			switch (type) {
 				case NAME:
@@ -106,23 +106,23 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
                     }
 					break;
 				case OWNER:
-					uid = *((uid_t*) searchArg);
+					uid = *((int*) searchArg);
 					if (statbuf.st_uid == uid) {
 						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case GROUP:
-					gid = *((gid_t*) searchArg);
+					gid = *((int*) searchArg);
 					if (statbuf.st_gid == gid) {
 						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case MODE:
-					permissions = statbuf.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
-					//Here we take what's EQUAL to the permission we ask for
-          if(permissions == (*(int*)searchArg)) {
-              insert(result, srealpath(entry->d_name, NULL));
-          }
+					perms = *((unsigned long *) searchArg);
+					int permsMask = statbuf.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
+					if (perms == permsMask) {
+						insert(result, srealpath(entry->d_name, NULL));
+					}
 					break;
 				default:
 					insert(result, srealpath(entry->d_name, NULL));
@@ -136,6 +136,12 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 	return result;
 }
 
-inline int timeCompare(struct timespec* t1, struct timespec* t2) {
-    return t1->tv_sec < t2->tv_sec ? -1 : t1->tv_sec == t2->tv_sec ? 0 : 1;
+int timeCompare(struct timespec* candidate, struct timespec* searchTime) {
+	if (candidate->tv_sec >= searchTime->tv_sec && candidate->tv_sec < searchTime->tv_sec + SECONDS_IN_DAY){
+		return 0;
+	}else if (candidate->tv_sec < searchTime->tv_sec){
+		return -1;
+	}else{
+		return 1;
+	}
 }

@@ -15,26 +15,23 @@ int isValidPath(char *path) {
 }
 
 struct timespec *getTimeSpec(char *date) {
-	int step = 0;
-	struct timespec *t = malloc(sizeof(struct timespec));
-	if (step == 0) {
-		char year[5];
-		strncpy(year, date, 4);
-		int yyyy = atoi(year);
-		t->tv_sec = (yyyy - 1970) * SECONDS_IN_YEAR;
-		step++;
-	} else if (step == 1) {
-		char month[3];
-		strncpy(month, &(date[6]), 2);
-		int mm = atoi(month);
-		t->tv_sec += (mm - 1) * SECONDS_IN_MONTH;
-		step++;
-	} else if (step == 2) {
-		char day[3];
-		strncpy(day, &(date[10]), 2);
-		int dd = atoi(day);
-		t->tv_sec += (dd - 1) * SECONDS_IN_DAY;
-	}
+	struct timespec *t = calloc(sizeof(struct timespec),1);
+	struct tm* timeMachine = calloc(sizeof(struct tm),1);
+	char year[5];
+	strncpy(year, date, 4);
+	int yyyy = atoi(year) - 1900;
+	timeMachine->tm_year = yyyy;
+	char month[3];
+	strncpy(month, &(date[5]), 2);
+	int mm = atoi(month) - 1;
+	timeMachine->tm_mon = mm;
+	char day[3];
+	strncpy(day, &(date[8]), 2);
+	int dd = atoi(day);
+	timeMachine->tm_mday = dd;
+	time_t epoch = mktime(timeMachine);
+	t->tv_sec = epoch;
+	free(timeMachine);
 	return t;
 }
 
@@ -109,6 +106,7 @@ int isValidSearch(searchType st, char *arg) {
 				return 0;
 			}
 		}
+		return 1;
 	} else if (st == OWNER || st == GROUP) {
 		return 1;
 	} else if (st == MODE) {
@@ -131,8 +129,7 @@ int evaluateAndSearch(char **expression, int exprLen, char *folder, List **resul
 		if (!isBooleanOp(p1)) {
 			searchType st = getSearchType(p1, expression[i + 1]);
 			if (isValidSearch(st, expression[i + 1])) {
-				void *op1 = prepareArgument(st, expression[i + 1]);
-				logMessage(0, "In evaluate ans search %s", folder);
+				void* op1 = prepareArgument(st, expression[i + 1]);
 				List *l1 = searchDirectory(folder, st, op1);
 				push(s, l1);
 			} else {
@@ -170,7 +167,8 @@ int evaluateAndSearch(char **expression, int exprLen, char *folder, List **resul
 void *prepareArgument(searchType st, char *arg) {
 	arg = trimArgument(st, arg);
 	logMessage(0, arg);
-	int *size = malloc(sizeof(int));
+	int *intVal = malloc(sizeof(int));
+	unsigned long* perms = malloc(sizeof(unsigned long));
 
 	switch (st) {
 		case STATUS_DATE_A:
@@ -184,23 +182,26 @@ void *prepareArgument(searchType st, char *arg) {
 		case USAGE_DATE_E:
 			return getTimeSpec(arg);
 		case OWNER:
-			return sgetpwuid(arg);
+			*intVal = sgetpwuid(arg);
+			logMessage(0, "UID for %s is %i", arg, *intVal);
+			return intVal;
 		case GROUP:
-			return sgetgrgid(arg);
+			*intVal = sgetgrgid(arg);
+			logMessage(0, "GID for %s is %i", arg, *intVal);
+			return intVal;
 		case SIZE_BIGGER:
 		case SIZE_EQUAL:
 		case SIZE_SMALLER:
-			*size = getSize(arg);
-			logMessage(0, "size is %i", *size);
-			return size;
+			*intVal = getSize(arg);
+			logMessage(0, "size is %i", *intVal);
+			return intVal;
 		case MODE:
-			//TODO
-			return NULL;
+			*perms = strtoul(arg, NULL, 8);
+			return perms;
 		case NAME:
 			return arg;
 	}
 }
-
 
 int getSize(char *sizeAsString) {
 	logMessage(0, "Hello %s", sizeAsString);
@@ -213,7 +214,6 @@ int getSize(char *sizeAsString) {
 	subSize[strlen(sizeAsString) - 1] = 0;
 	logMessage(0, "Size before unit %s, unit is %c", subSize, unit);
 	int size = atoi(subSize);
-	//TODO take string without last and atoi
 	switch (unit) {
 		case 'K':
 			return size * 1024;
