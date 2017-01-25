@@ -128,11 +128,16 @@ int evaluateAndSearch(char **expression, int exprLen, char *folder, List **resul
 		char *p1 = expression[i];
 		if (!isBooleanOp(p1)) {
 			searchType st = getSearchType(p1, expression[i + 1]);
+			if(st == -1) {
+				logMessage(3, "This search doesn't exists");
+				return -1;
+			}
 			if (isValidSearch(st, expression[i + 1])) {
 				void* op1 = prepareArgument(st, expression[i + 1]);
 				List *l1 = searchDirectory(folder, st, op1);
 				push(s, l1);
 			} else {
+				logMessage(3, "This search argument isn't valid");
 				return -1;
 			}
 

@@ -25,7 +25,8 @@ int main(int argc, char const *argv[]) {
 			initList(files, 100);
 			int k = evaluateAndSearch(&(argv[3]), argc - 3, searchPath, &files);
 			if (k == -1) {
-				logMessage(2, "Error while checking");
+				logMessage(3, "Error while searching");
+				return 1;
 			}
 			dumpList(files);
 
