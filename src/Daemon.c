@@ -1,4 +1,13 @@
-#include "Deamon.h"
+/**
+ * @file Daemon.c
+ * @brief Source file that contains the implementation for our background process computation
+ *
+ * @authors Maxime Lovino, Thomas Ibanez
+ * @date January 25, 2017
+ * @version 1.0
+ */
+
+#include "Daemon.h"
 
 void incrementalSearch(char **expression, int exprLen, char *searchFolder, char *smartFolder, HashSet *files) {
 	logMessage(0, "Deamon Started");

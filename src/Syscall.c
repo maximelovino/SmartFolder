@@ -1,3 +1,12 @@
+/**
+ * @file Syscall.c
+ * @brief Source file that contains the implementation for system calls wrapper functions used in our program
+ *
+ * @authors Maxime Lovino, Thomas Ibanez
+ * @date January 25, 2017
+ * @version 1.0
+ */
+
 #include "Syscall.h"
 
 int sfork() {
@@ -25,40 +34,41 @@ int saccess(char *path) {
 }
 
 int sunlink(char *file) {
-	if (saccess(file)){
+	if (saccess(file)) {
 		return unlink(file);
 	}
 	return -1;
 }
-int srmdir(char* path){
+
+int srmdir(char *path) {
 	return rmdir(path);
 }
 
-int sgetpwuid(char* userName) {
+int sgetpwuid(char *userName) {
 	return getpwnam(userName)->pw_uid;
 }
 
-int sgetgrgid(char* groupName) {
+int sgetgrgid(char *groupName) {
 	return getgrnam(groupName)->gr_gid;
 }
 
-int slstat(char* name, struct stat* statbuf) {
+int slstat(char *name, struct stat *statbuf) {
 	return lstat(name, statbuf);
 }
 
-DIR* sopendir(char* name) {
+DIR *sopendir(char *name) {
 	return opendir(name);
 }
 
-int schdir(char* name) {
+int schdir(char *name) {
 	return chdir(name);
 }
 
-int sclosedir(DIR* dp) {
-		return closedir(dp);
+int sclosedir(DIR *dp) {
+	return closedir(dp);
 }
 
-struct dirent* sreaddir(DIR* dir) {
+struct dirent *sreaddir(DIR *dir) {
 	return readdir(dir);
 }
 
@@ -74,6 +84,6 @@ int sS_ISREG(mode_t m) {
 	return S_ISREG(m);
 }
 
-char* srealpath(char* p, char* buf) {
+char *srealpath(char *p, char *buf) {
 	return realpath(p, buf);
 }

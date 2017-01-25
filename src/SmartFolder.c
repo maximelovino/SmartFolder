@@ -1,17 +1,25 @@
+/**
+ * @file SmartFolder.c
+ * @brief Main entry point of our program
+ *
+ * @authors Maxime Lovino, Thomas Ibanez
+ * @date January 25, 2017
+ * @version 1.0
+ */
+
 #include "Syscall.h"
 #include "Parser.h"
-#include "List.h"
 #include "Linker.h"
-#include "Deamon.h"
-#include "HashSet.h"
+#include "Daemon.h"
 #include "SysFile.h"
-#include <stdio.h>
-#include <signal.h>
-#include <limits.h>
-#include <stdlib.h>
 
+/**
+ * Main function of our program, this will run when the program is called
+ * @param argc The number of arguments passed to the program
+ * @param argv An array of the arguments passed to the program
+ * @return An exit code, 0 if everything went well
+ */
 int main(int argc, char const *argv[]) {
-	//Parse parameters
 	if (argc > 3) {
 		if (isValidPath(argv[1]) && isValidPath(argv[2])) {
 			char *smartFolderPath[strlen(argv[1])];
@@ -39,7 +47,7 @@ int main(int argc, char const *argv[]) {
 					incrementalSearch(&(argv[3]), argc - 3, searchPath, smartFolderPath, set);
 				} else if (pid > 0) {
 					logMessage(0, "The child is at process %d", pid);
-					if (!createSysFile(pid, smartFolderPath)) {
+					if (createSysFile(pid, smartFolderPath)) {
 						logMessage(3, "A smartFolder with this name already exists");
 					}
 				}

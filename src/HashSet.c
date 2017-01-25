@@ -1,22 +1,27 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
+/**
+ * @file HashSet.c
+ * @brief Source file that contains the implementation for a HashSet data structure containing Strings
+ *
+ * @authors Maxime Lovino, Thomas Ibanez
+ * @date January 25, 2017
+ * @version 1.0
+ */
+
 #include "HashSet.h"
 
-HashSet* initSet(int size){
-	HashSet* table = malloc(sizeof(HashSet));
-	table->table = calloc(size, sizeof(char*));
+HashSet *initSet(int size) {
+	HashSet *table = malloc(sizeof(HashSet));
+	table->table = calloc(size, sizeof(char *));
 	table->size = size;
 	table->filled = 0;
 	return table;
 }
 
-void expand(HashSet* table){
-	char** oldTable = table->table;
-	table->table = calloc(2*table->size, sizeof(char*));
+void expand(HashSet *table) {
+	char **oldTable = table->table;
+	table->table = calloc(2 * table->size, sizeof(char *));
 	int size = table->size;
-	table->size = 2*table->size;
+	table->size = 2 * table->size;
 	table->filled = 0;
 	for (int i = 0; i < size; i++) {
 		if (oldTable[i] != NULL && strcmp(oldTable[i], " ") != 0) {
@@ -26,31 +31,33 @@ void expand(HashSet* table){
 }
 
 
-void putAll(HashSet* table, List* list) {
-	ListElement* le = list->head;
-	while(le != NULL) {
+void putAll(HashSet *table, List *list) {
+	ListElement *le = list->head;
+	while (le != NULL) {
 		put(table, le->data);
 		le = le->next;
 	}
 }
 
-void put(HashSet* table, char* filePath){
+void put(HashSet *table, char *filePath) {
 	if (table->filled >= 0.8 * table->size) {
-		//printf("We need to expand\n");
+		logMessage(0, "Expanding HashTable");
 		expand(table);
 	}
 
 	int hashValue = hash(filePath) % table->size;
 	//TODO There has to be a better way
-	while (table->table[hashValue] != 0 || (table->table[hashValue] != 0 && strcmp(table->table[hashValue], " ") == 0)) {
+	while (table->table[hashValue] != 0 ||
+		   (table->table[hashValue] != 0 && strcmp(table->table[hashValue], " ") == 0)) {
 		hashValue++;
 		hashValue %= table->size;
 	}
-	table->table[hashValue] = malloc(strlen(filePath)+1);
+	table->table[hashValue] = malloc(strlen(filePath) + 1);
 	strcpy(table->table[hashValue], filePath);
 	table->filled++;
 }
-void removeFromSet(HashSet* table, char* filePath){
+
+void removeFromSet(HashSet *table, char *filePath) {
 	int index = searchInSet(table, filePath);
 	if (index == -1) {
 		return;
@@ -62,14 +69,14 @@ void removeFromSet(HashSet* table, char* filePath){
 	table->filled--;
 }
 
-int contains(HashSet* table, char* filePath){
+int contains(HashSet *table, char *filePath) {
 	return searchInSet(table, filePath) != -1;
 }
 
-int searchInSet(HashSet* table, char* filePath){
+int searchInSet(HashSet *table, char *filePath) {
 	int hashValue = hash(filePath) % table->size;
 	while (table->table[hashValue] != NULL) {
-		if (strcmp(table->table[hashValue], filePath) ==  0) {
+		if (strcmp(table->table[hashValue], filePath) == 0) {
 			return hashValue;
 		}
 		hashValue++;
@@ -78,19 +85,19 @@ int searchInSet(HashSet* table, char* filePath){
 	return -1;
 }
 
-int hash(char* text){
+int hash(char *text) {
 	int hashValue = 0;
 	int i = 0;
 	while (text[i] != 0) {
-		hashValue += (i+1) * text[i];
+		hashValue += (i + 1) * text[i];
 		i++;
 	}
 	return hashValue;
 }
 
-void deleteSet(HashSet** table){
+void deleteSet(HashSet **table) {
 	for (int i = 0; i < (*table)->size; i++) {
-		if ((*table)->table[i] != NULL && strcmp((*table)->table[i]," ") != 0) {
+		if ((*table)->table[i] != NULL && strcmp((*table)->table[i], " ") != 0) {
 			free((*table)->table[i]);
 		}
 	}
@@ -99,10 +106,10 @@ void deleteSet(HashSet** table){
 	*table = NULL;
 }
 
-void dumpSet(HashSet* table) {
+void dumpSet(HashSet *table) {
 	logMessage(0, "%s\n", "------- HashSet Dump -------");
 	for (int i = 0; i < table->size; i++) {
-		if(table->table[i] != 0 && strcmp(table->table[i], " ") != 0) {
+		if (table->table[i] != 0 && strcmp(table->table[i], " ") != 0) {
 			logMessage(0, "%s\n", table->table[i]);
 		}
 	}

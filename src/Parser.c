@@ -1,17 +1,26 @@
+/**
+ * @file Parser.h
+ * @brief Source file that contains the implementation of our Parser
+ *
+ * @authors Maxime Lovino, Thomas Ibanez
+ * @date January 25, 2017
+ * @version 1.0
+ */
+
 #include "Parser.h"
 
 int isValidPath(char *path) {
 	static regex_t regex;
 	static int compiled;
 	if (!compiled) {
-		if (regcomp(&regex, FILE_PATH_REGEX, 0)) {
+		if (regcomp(&regex, FILE_PATH_REGEX, REG_EXTENDED)) {
 			logMessage(2, "Couldn't compile the regexp to check validity of folder");
 			return -1;
 		} else {
 			compiled = 1;
 		}
 	}
-	return regexec(&regex, path, 0, NULL, 0);
+	return !regexec(&regex, path, 0, NULL, 0);
 }
 
 struct timespec *getTimeSpec(char *date) {
