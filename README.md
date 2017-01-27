@@ -43,3 +43,6 @@ Let's say we want all .c and .h files smaller than 1 MB to be searched from the 
 Then to delete this SmartFolder, you would use the command
 
 `./SmartFolder -d memory_leak`
+
+## Documentation
+Documentation for the code is available [here](https://maximelovino.github.io/SmartFolder/)
