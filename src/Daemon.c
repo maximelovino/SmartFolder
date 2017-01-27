@@ -27,8 +27,9 @@ void incrementalSearch(const char** expression, int exprLen, char* searchFolder,
 				logMessage(0, "New file found: %s", tmp->data);
 				put(files, tmp->data);
 				insert(filesList,tmp->data);
-				makeLink(tmp->data, smartFolder);
-				//TODO check return val
+				if(!makeLink(tmp->data, smartFolder)){
+					logMessage(2,"Couldn't create link for %s", tmp->data);
+				}
 			}
 			tmp = tmp->next;
 		}
@@ -37,7 +38,6 @@ void incrementalSearch(const char** expression, int exprLen, char* searchFolder,
 		while(tmp){
 			if(!contains(resultSet,tmp->data)){
 				logMessage(1, "The file %s doesn't exist anymore", tmp->data);
-				//TODO here we must remove from hashset, and fileList, and remove the link
 				removeLink(tmp->data,smartFolder);
 				removeObject(filesList,tmp->data);
 				removeFromSet(files, tmp->data);

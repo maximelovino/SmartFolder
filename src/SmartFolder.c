@@ -55,53 +55,20 @@ int main(int argc, char const* argv[]) {
 			}
 		}
 	} else if (argc == 3 && strcmp(argv[1], "-d") == 0) {
-		//TODO modularize this code
-		char pathTmpFile[1024];
-		strcpy(pathTmpFile, SYSFILE_PATH);
-		strcat(pathTmpFile, argv[2]);
-		logMessage(0, "The file to open is %s", pathTmpFile);
-		FILE* tmpFile = fopen(pathTmpFile, "r");
-		if (!tmpFile) {
-			logMessage(3, "A smartFolder with this name doesn't exist");
+		int pidToKill = getPID(argv[2]);
+		if (pidToKill == -1){
+			logMessage(3,"Couldn't find file with pid for the folder %s", argv[2]);
 			_exit(1);
 		}
-		char* line = NULL;
-	 	size_t size = 0;
-		int pidToKill = 0;
-		if (getline(&line, &size, tmpFile) != -1) {
-			pidToKill = atoi(line);
-			logMessage(0, "The folder is at pid %d", pidToKill);
-			kill(pidToKill, SIGKILL);
-		}
+		kill(pidToKill, SIGKILL);
 
-		fclose(tmpFile);
-		if (!sunlink(pathTmpFile)) {
-			logMessage(2, "Couldn't delete file %s", pathTmpFile);
+		char* folderPath = getFolderPath(pidToKill);
+		if (!folderPath){
+			logMessage(3,"Couldn't find file with path for the folder %s", argv[2]);
 			_exit(1);
-		} else {
-			logMessage(0, "File deleted %s", pathTmpFile);
 		}
-		char secondFile[1024];
-		strcpy(secondFile, SYSFILE_PATH);
-		strcat(secondFile, line);
-		logMessage(0, "Second file is %s", secondFile);
-		FILE* secondFP = fopen(secondFile, "r");
-		if (getline(&line, &size, secondFP) != -1) {
-			logMessage(0, "Starting removal of folder %s", line);
-			removeFolder(line);
-			//TODO test this return
-		}
-		fclose(secondFP);
-		if (!sunlink(secondFile)) {
-			logMessage(2, "Couldn't delete file %s", secondFile);
-			_exit(1);
-		} else {
-			logMessage(0, "File deleted %s", secondFile);
-		}
-
-		if (line) {
-			free(line);
-		}
+		logMessage(0, "Starting removal of folder %s", folderPath);
+		removeFolder(folderPath);
 	} else {
 		printf("Usage:\nSmartFolder <LinkDirectory> <SearchDirectory> [searchExpression]\nSmartFolder -d <RunningFolder>\n");
 	}

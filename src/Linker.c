@@ -81,13 +81,17 @@ int removeFolder(char* path) {
 		return -1;
 	}
 
-	schdir(path);
-	//TODO check return
+	if(!schdir(path)){
+		logMessage(2, "Couldn't move to dir %s", path);
+		return 0;
+	}
+
 	struct dirent* entry;
 	struct stat statbuf;
 	while ((entry = sreaddir(dp)) != NULL) {
-		slstat(entry->d_name, &statbuf);
-		//TODO test this return
+		if(!slstat(entry->d_name, &statbuf)){
+			logMessage(2,"Couldn't stat %s",entry->d_name);
+		}
 		if (sS_ISLNK(statbuf.st_mode) || sS_ISREG(statbuf.st_mode)) {
 			logMessage(0, "Removing file %s", entry->d_name);
 			if (!sunlink(entry->d_name)) {
@@ -96,8 +100,9 @@ int removeFolder(char* path) {
 			}
 		}
 	}
-	sclosedir(dp);
-	//TODO check return
+	if(!sclosedir(dp)){
+		logMessage(2, "Couldn't close dir %s", path);
+	}
 	logMessage(0, "Removing directory %s", path);
 	return srmdir(path);
 }

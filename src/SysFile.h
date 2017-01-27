@@ -26,4 +26,18 @@
  */
 int createSysFile(int pid, char* smartFolder);
 
+/**
+ * Function to retrieve the PID of a running folder
+ * @param folderName The name of the SmartFolder
+ * @return The PID of the process running that Folder, -1 if not found
+ */
+int getPID(const char* folderName);
+
+/**
+ * Function to retrieve the full path of a SmartFolder
+ * @param pid The PID of the process running the folder
+ * @return The full path of the SmartFolder, NULL if not found
+ */
+char* getFolderPath(int pid);
+
 #endif /* end of include guard: _SYSFILE_H_ */

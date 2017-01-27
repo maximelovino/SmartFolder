@@ -31,3 +31,52 @@ int createSysFile(int pid, char* smartFolder) {
 	}
 	return 1;
 }
+
+
+int getPID(const char* folderName){
+	char fileToOpen[512];
+	sprintf(fileToOpen,"%s%s",SYSFILE_PATH,folderName);
+	FILE* fp = fopen(fileToOpen, "r");
+	if (!fp){
+		return -1;
+	}
+	char* line = NULL;
+	size_t size = 0;
+	int pidToKill = -1;
+	if (getline(&line, &size, fp) != -1) {
+		pidToKill = atoi(line);
+		logMessage(0, "The folder is at pid %d", pidToKill);
+	}
+	if (line){
+		free(line);
+	}
+	fclose(fp);
+	if (!sunlink(fileToOpen)) {
+		logMessage(2, "Couldn't delete file %s", fileToOpen);
+	} else {
+		logMessage(0, "File deleted %s", fileToOpen);
+	}
+	return pidToKill;
+}
+
+char* getFolderPath(int pid){
+	char fileToOpen[512];
+	sprintf(fileToOpen,"%s%i",SYSFILE_PATH,pid);
+	FILE* fp = fopen(fileToOpen, "r");
+	if (!fp){
+		return NULL;
+	}
+	char* line = NULL;
+	size_t size = 0;
+	if (getline(&line, &size, fp) != -1) {
+		fclose(fp);
+		if (!sunlink(fileToOpen)) {
+			logMessage(2, "Couldn't delete file %s", fileToOpen);
+		} else {
+			logMessage(0, "File deleted %s", fileToOpen);
+		}
+		return line;
+	}else{
+		return NULL;
+	}
+}
