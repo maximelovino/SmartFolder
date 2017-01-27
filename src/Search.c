@@ -20,21 +20,28 @@ List* searchDirectory(const char* rootDir, searchType type, const void* searchAr
 		logMessage(3, "Couldn't open directory %s\n", rootDir);
 		return NULL;
 	}
-	schdir(rootDir);
-	//TODO check return
+	if(!schdir(rootDir)) {
+		logMessage(3, "Couldn't change directory %s\n", rootDir);
+		return NULL;
+	}
+
 	while ((entry = sreaddir(dp)) != NULL) {
-		slstat(entry->d_name, &statbuf);
-		//TODO test this return
+		if(!slstat(entry->d_name, &statbuf)) {
+			logMessage(3, "Couldn't stat file %s\n", entry->d_name);
+			continue;
+		}
 		if (sS_ISLNK(statbuf.st_mode)) continue;
 		if (sS_ISDIR(statbuf.st_mode)) {
 			if (strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0) {
 				continue;
 			}
 			List* recursiveResult = searchDirectory(entry->d_name, type, searchArg);
-			List* r = listUnion(result, recursiveResult);
-			deleteList(result);
-			deleteList(recursiveResult);
-			result = r;
+			if(recursiveResult != NULL) {
+				List* r = listUnion(result, recursiveResult);
+				deleteList(result);
+				deleteList(recursiveResult);
+				result = r;
+			}
 		} else {
 
 			int size;
