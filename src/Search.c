@@ -9,7 +9,7 @@
 
 #include "Search.h"
 
-List* searchDirectory(const char* rootDir, searchType type, void* searchArg) {
+List* searchDirectory(const char* rootDir, searchType type, const void* searchArg) {
 	List* result = initList();
 
 	DIR* dp;

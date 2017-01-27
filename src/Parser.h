@@ -53,7 +53,7 @@ searchType getSearchType(const char* param, const char* arg);
  * @param  word the word to check
  * @return      1 if it is a boolean operator, 0 otherwise
  */
-int isBooleanOp(char* word);
+int isBooleanOp(const char* word);
 
 /**
  * Checks if a searchType has proper argument linked to it
@@ -80,7 +80,7 @@ int evaluateAndSearch(const char** expression, int exprLen, char* folder, List**
  * @param arg The argument as a string
  * @return A pointer to the argument in the correct type
  */
-void* prepareArgument(searchType st, const char* arg);
+const void* prepareArgument(searchType st, const char* arg);
 
 /**
  * Converts a size with its Unit suffix (K, M, G, T) to the correct size
@@ -95,6 +95,6 @@ int getSize(const char* sizeAsString);
  * @param  arg argument to trim
  * @return     Trimmed argument
  */
-char* trimArgument(searchType st, const char* arg);
+const char* trimArgument(searchType st, const char* arg);
 
 #endif /* end of include guard: _PARSER_H_ */

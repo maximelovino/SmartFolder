@@ -47,7 +47,7 @@ typedef enum {
  * @param  searchArg	The argument for the search
  * @return              A list of matching files
  */
-List* searchDirectory(const char* rootDir, searchType type, void* searchArg);
+List* searchDirectory(const char* rootDir, searchType type, const void* searchArg);
 
 /**
  * Function to compare 2 timespecs

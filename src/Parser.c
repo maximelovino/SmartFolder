@@ -86,7 +86,7 @@ searchType getSearchType(const char* param, const char* arg) {
 }
 
 
-int isBooleanOp(char* word) {
+int isBooleanOp(const char* word) {
 	return (strcmp(word, "and") & strcmp(word, "AND") & strcmp(word, "or") & strcmp(word, "OR") & strcmp(word, "not") &
 			strcmp(word, "NOT") & strcmp(word, "xor") & strcmp(word, "XOR")) == 0;
 }
@@ -135,7 +135,7 @@ int isValidSearch(searchType st, const char* arg) {
 int evaluateAndSearch(const char** expression, int exprLen, char* folder, List** result) {
 	Stack* s = initStack();
 	for (int i = 0; i < exprLen; i += 2) {
-		char* p1 = expression[i];
+		const char* p1 = expression[i];
 		if (!isBooleanOp(p1)) {
 			searchType st = getSearchType(p1, expression[i + 1]);
 			if (st == NONE) {
@@ -143,7 +143,7 @@ int evaluateAndSearch(const char** expression, int exprLen, char* folder, List**
 				return -1;
 			}
 			if (isValidSearch(st, expression[i + 1])) {
-				void* op1 = prepareArgument(st, expression[i + 1]);
+				const void* op1 = prepareArgument(st, expression[i + 1]);
 				List* l1 = searchDirectory(folder, st, op1);
 				push(s, l1);
 			} else {
@@ -179,7 +179,7 @@ int evaluateAndSearch(const char** expression, int exprLen, char* folder, List**
 	return 0;
 }
 
-void* prepareArgument(searchType st, const char* arg) {
+const void* prepareArgument(searchType st, const char* arg) {
 	arg = trimArgument(st, arg);
 	logMessage(0, arg);
 	int* intVal = malloc(sizeof(int));
@@ -214,7 +214,7 @@ void* prepareArgument(searchType st, const char* arg) {
 			*perms = strtoul(arg, NULL, 8);
 			return perms;
 		case NAME:
-			return arg;
+			return (const char*)arg;
 		default:
 			return NULL;
 	}
@@ -246,13 +246,13 @@ int getSize(const char* sizeAsString) {
 	}
 }
 
-char* trimArgument(searchType st, const char* arg) {
+const char* trimArgument(searchType st, const char* arg) {
 	if (st == SIZE_BIGGER || st == SIZE_SMALLER || st == STATUS_DATE_B || st == STATUS_DATE_A || st == MODIF_DATE_B ||
 		st == MODIF_DATE_A || st == USAGE_DATE_B || st == USAGE_DATE_A) {
 		int s = strlen(arg);
 		char* narg = malloc(s);
 		strcpy(narg, &arg[1]);
-		return narg;
+		return (const char*)narg;
 	}
-	return arg;
+	return (const char*)arg;
 }
