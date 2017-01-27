@@ -26,13 +26,14 @@ List* searchDirectory(const char* rootDir, searchType type, const void* searchAr
 	}
 
 	while ((entry = sreaddir(dp)) != NULL) {
+
 		if(!slstat(entry->d_name, &statbuf)) {
 			logMessage(3, "Couldn't stat file %s\n", entry->d_name);
 			continue;
 		}
 		if (sS_ISLNK(statbuf.st_mode)) continue;
 		if (sS_ISDIR(statbuf.st_mode)) {
-			if (strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0) {
+		  if (strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0 || entry->d_name[0] == '.') {
 				continue;
 			}
 			List* recursiveResult = searchDirectory(entry->d_name, type, searchArg);
@@ -147,6 +148,7 @@ List* searchDirectory(const char* rootDir, searchType type, const void* searchAr
 					break;
 			}
 		}
+
 	}
 	schdir("..");
 	//TODO check return
