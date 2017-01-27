@@ -18,9 +18,9 @@
 \maketitle
 \newpage
 \section{Introduction}
-Hello world
-\section{Architecture}
-\includegraphics[width=\textwidth]{diagram.png}
+Nous avons réalisé notre programme SmartFolder en 3 étages principaux. Un bloc de structure de données et utilitaires qui servent à toutes les autres parties du programme. Un bloc moteur, qui regroupe le Parser ainsi que le moteur de recherche et le créateur de liens. Et tout en haut, un bloc qui éxecute, il s'agit donc du main du programme, ainsi que de la partie Daemon qui va tourner en tâche de fond et lancer la recherche incrémentale. \\
+
+Vous pouvez trouver en dernière page de ce document, un schéma de cette architecture.
 \subsection{Data Structures}
 \subsubsection{List}
 Nous avons une structure de liste qui sert à stocker la liste des résultats d'une recherhe (liste de fichiers). Nous définissions des fonctions permettant d'agréer plusieurs listes au travers d'une union, intersection, etc... correspondant aux opérations booléennes classiques.
@@ -33,15 +33,22 @@ Nous utilisons une structure de Pile pour stocker les résultats d'une recherche
 \subsubsection{Logger}
 Nous avons réalisé un Logger pour pouvoir afficher sur la console des messages de notre programme, pour ceci nous définissons 3 niveaux de severité pour un message:
 \begin{itemize}
-	\item 0: INFO, un message d'information, par exemple un dump de hashtable ou des informations sur les fichiers trouvés
-	\item 1: WARNING, un message de warning, par exemple une erreur dans notre programme durant son execution mais qui n'empêche pas le programme de continuer
-	\item 2: FATAL, un message d'erreur, lorsqu'une erreur se produit qui fait crasher le programme entièrement
+	\item 0: DEBUG, ce mode est utilisé en debug uniquement, beaucoup trop verbose pour la production
+	\item 1: INFO, un message d'information pour l'utilisateur, comme un fichier trouvé par exemple.
+	\item 2: WARNING, un message de warning, par exemple une erreur dans notre programme durant son execution mais qui n'empêche pas le programme de continuer
+	\item 3: FATAL, un message d'erreur, lorsqu'une erreur se produit qui fait crasher le programme entièrement
 \end{itemize}
-Dans le fichier \verb+Logger.h+ on peut changer la valeur du \verb+#define LOG_LEVEL X+ par le niveau minimal que l'on veut. C'est-à-dire que si nous définissons 1 ici, le logger affichera uniquement les messages de niveau 1 et 2. \\
+Dans le fichier \verb+Logger.h+ on peut changer la valeur du \verb+#define LOG_LEVEL X+ par le niveau minimal que l'on veut. C'est-à-dire que si nous définissons 1 ici, le logger affichera uniquement les messages de niveau 1 et 2. En version release, le niveau est configuré à 1.\\
 
 Dans notre code nous pouvons utiliser la fonction \verb+void logMessage(int level, const char* format, ...);+ pour logger un message en spécifiant son niveau et en utilisant une syntaxe similaire à \verb+printf(...)+ ensuite.
 \subsubsection{SysCall}
-Nous avons un fichier regroupant des fonctions wrappers pour les appels systèmes que nous utilisons dans les différentes parties de notre programme. De ce fait, si nous voulons porter notre programme sur un autre système, nous avons juste à modifier le contenu de ces fonctions pour adapter ces appels systèmes.
+Nous avons un fichier regroupant des fonctions wrappers pour les appels systèmes que nous utilisons dans les différentes parties de notre programme. De ce fait, si nous voulons porter notre programme sur un autre système, nous avons juste à modifier le contenu de ces fonctions pour adapter ces appels systèmes. \\
+
+Les valeurs de retour des appels systèmes ont été standardisées pour retourner un booléen, c'est-à-dire un 1 en cas de réussite et un 0 dans le cas contraire.
+\subsubsection{SysFile}
+Dans cette partie, nous allons créer les fichiers qui nous serviront à retrouver une instance de SmartFolder déjà lancée sur la machine. Nous avons également des fonctions pour supprimer ces fichiers lors de la suppression du SmartFolder. Ces fichiers sont stockés dans \verb+/tmp/+.\\
+
+Il s'agit de deux fichiers, l'un ayant pour nom le nom du SmartFolder et contenant son PID, l'autre ayant pour nom le PID et contenant le chemin complet du SmartFolder.
 \subsection{Engine}
 \subsubsection{Search}
 Dans la partie recherche nous avons la fonction qui va effectuer une recherche d'un certain type avec un certain argument de recherche dans un dossier et va retourner une liste des résultats de cette recherche. Nous définissons les types de recherche possible dans une énumération. Nous passons à la fonction le dossier à chercher, le type de recherche et l'argument de la recherche en question.
@@ -54,9 +61,9 @@ qui va analyser la query passée en paramètre au programme (sous forme polonais
 
 Nous avons également d'autres fonctions permettant de vérifier si une fragment de recherche est valide, détecter des opérateurs booléens, recupérer l'UID d'un nom d'utilisateur ainsi que vérifier que le chemin d'accès du dossier est valide. Pour cette dernière, nous utilisons une RegExp en utilisant \verb+Regex.h+ pour computer la regex.
 \subsubsection{Linker}
-Le Linker sert à créer un lien symbolique vers un fichier dans le dossier de destination, il va s'occuper de créer un symlink avec le nom du fichier et gérer les collisions de noms le cas échéant (par exemple \verb+./a.txt+ et \verb+./abc/a.txt+ vont donner des symLink \verb+a.txt+ et \verb+a(1).txt+)
-\subsubsection{Daemonizer}
-Le Daemonizer va s'occuper de faire tourner en arrière-plan notre programme et de merger les nouveaux résultats de recherche avec les résultats déjà liés précedemment. Cela comprendra également la suppression de fichiers qui n'existent plus dans le dossier d'origine.
+Le Linker sert à créer un lien symbolique vers un fichier dans le dossier de destination, il va s'occuper de créer un symlink avec le nom du fichier et gérer les collisions de noms le cas échéant (par exemple \verb+./a.txt+ et \verb+./abc/a.txt+ vont donner des symLink \verb+a.txt+ et \verb+a.txt(1)+)
+\subsection{Daemonizer}
+Le Daemonizer va s'occuper de faire tourner en arrière-plan notre programme et de merger les nouveaux résultats de recherche avec les résultats déjà liés précedemment. Cela comprendra également la suppression de fichiers qui n'existent plus dans le dossier d'origine, ou qui ne matchent plus la recherche.
 \subsection{SmartFolder}
 Partie principale du programme, c'est ici qu'on s'occupera de prendre les arguments de l'utilisateur pour la création d'une instance de SmartFolder, ainsi que pour la suppression d'un SmartFolder existant.
 \section{Utilisation du programme}
@@ -72,7 +79,7 @@ ou pour supprimer un SmartFolder existant:
 Au niveau de la \verb+[searchQuery]+ les arguments suivant pourront être utilisés
 \begin{itemize}
 	\item \verb/--name <name>/
-	\item \verb/--size [-+]<size>/
+	\item \verb/--size [-+]<size>[K/M/G/T]/
 	\item \verb/--dateStatus [-+]<YYYY-MM-DD>/
 	\item \verb/--dateModified [-+]<YYYY-MM-DD>/
 	\item \verb/--dateUsed [-+]<YYYY-MM-DD>/
@@ -82,14 +89,15 @@ Au niveau de la \verb+[searchQuery]+ les arguments suivant pourront être utilis
 \end{itemize}
 ainsi que les opérateurs booléens classiques sous cette forme
 \begin{itemize}
-	\item \verb+AND+
-	\item \verb+OR+
-	\item \verb+XOR+
-	\item \verb+NOT+
+	\item \verb+AND/and+
+	\item \verb+OR/or+
+	\item \verb+XOR/xor+
+	\item \verb+NOT/not+
 \end{itemize}
-
 La query sera sous la forme polonaise inverse, ce qui donne par exemple pour chercher tous les fichiers contenant \verb+toto+ dans le nom ET ayant comme permissions 777 OU les fichiers du user \verb+lovino+.
 \begin{verbatim}
 	--name toto --perms 777 AND --uid lovino OR
 \end{verbatim}
+\section{Conclusion}
+En conclusion, nous avons énormément apprécié travailler sur ce projet, qui est à la fois utile et intéressant. Nous avons pu découvrir beaucoup d'aspects des appels systèmes et la puissance du monde UNIX. Ce projet nous a servi également à encore amélioré nos connaissances du langage C, ainsi qu'à mieux gérer un projet d'une certaine envergure sur plusieurs mois.
 \end{document}
