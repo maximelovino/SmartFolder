@@ -28,7 +28,7 @@ int main(int argc, char const* argv[]) {
 			strcpy(smartFolderPath, argv[1]);
 			searchPath = srealpath(argv[2], NULL);
 			logMessage(1, "Search path %s", searchPath);
-			logMessage(1, "SmartFolder", smartFolderPath);
+			logMessage(1, "SmartFolder %s", smartFolderPath);
 			List* files = initList();
 			logMessage(1, "Launching search");
 			int k = evaluateAndSearch(&(argv[3]), argc - 3, searchPath, &files);
