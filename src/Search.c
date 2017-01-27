@@ -20,24 +20,24 @@ List* searchDirectory(const char* rootDir, searchType type, const void* searchAr
 		logMessage(3, "Couldn't open directory %s\n", rootDir);
 		return NULL;
 	}
-	if(!schdir(rootDir)) {
+	if (!schdir(rootDir)) {
 		logMessage(3, "Couldn't change directory %s\n", rootDir);
 		return NULL;
 	}
 
 	while ((entry = sreaddir(dp)) != NULL) {
 
-		if(!slstat(entry->d_name, &statbuf)) {
+		if (!slstat(entry->d_name, &statbuf)) {
 			logMessage(3, "Couldn't stat file %s\n", entry->d_name);
 			continue;
 		}
 		if (sS_ISLNK(statbuf.st_mode)) continue;
 		if (sS_ISDIR(statbuf.st_mode)) {
-		  if (strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0 || entry->d_name[0] == '.') {
+			if (strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0 || entry->d_name[0] == '.') {
 				continue;
 			}
 			List* recursiveResult = searchDirectory(entry->d_name, type, searchArg);
-			if(recursiveResult != NULL) {
+			if (recursiveResult != NULL) {
 				List* r = listUnion(result, recursiveResult);
 				deleteList(result);
 				deleteList(recursiveResult);
@@ -49,7 +49,7 @@ List* searchDirectory(const char* rootDir, searchType type, const void* searchAr
 			char* searchString;
 			unsigned int uid;
 			unsigned int gid;
-		 	mode_t perms;
+			mode_t perms;
 
 			switch (type) {
 				case NAME:
@@ -150,10 +150,13 @@ List* searchDirectory(const char* rootDir, searchType type, const void* searchAr
 		}
 
 	}
-	schdir("..");
-	//TODO check return
-	sclosedir(dp);
-	//TODO check return
+	if (!schdir("..")) {
+		logMessage(3, "Couldn't change dir back to .., exiting");
+		_exit(1);
+	}
+	if (!sclosedir(dp)) {
+		logMessage(2, "Couldn't close dir %s", rootDir);
+	}
 	return result;
 }
 

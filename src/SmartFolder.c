@@ -23,18 +23,20 @@
 int main(int argc, char const* argv[]) {
 	if (argc > 3) {
 		if (isValidPath(argv[1]) && isValidPath(argv[2])) {
-			char smartFolderPath[strlen(argv[1])+1];
+			char smartFolderPath[strlen(argv[1]) + 1];
 			char* searchPath;
 			strcpy(smartFolderPath, argv[1]);
 			searchPath = srealpath(argv[2], NULL);
-			logMessage(0, "We search in %s => %s", argv[2], searchPath);
-			logMessage(0, "We put in %s => %s", argv[1], smartFolderPath);
+			logMessage(1, "Search path %s", searchPath);
+			logMessage(1, "SmartFolder", smartFolderPath);
 			List* files = initList();
+			logMessage(1, "Launching search");
 			int k = evaluateAndSearch(&(argv[3]), argc - 3, searchPath, &files);
 			if (k == -1) {
 				logMessage(3, "Error while searching");
 				return 1;
 			}
+			logMessage(1, "Search results");
 			dumpList(files);
 
 			if (makeFolder(smartFolderPath, files) == 0) {
@@ -56,19 +58,23 @@ int main(int argc, char const* argv[]) {
 		}
 	} else if (argc == 3 && strcmp(argv[1], "-d") == 0) {
 		int pidToKill = getPID(argv[2]);
-		if (pidToKill == -1){
-			logMessage(3,"Couldn't find file with pid for the folder %s", argv[2]);
+		if (pidToKill == -1) {
+			logMessage(3, "Couldn't find file with pid for the folder %s", argv[2]);
 			_exit(1);
 		}
 		kill(pidToKill, SIGKILL);
 
 		char* folderPath = getFolderPath(pidToKill);
-		if (!folderPath){
-			logMessage(3,"Couldn't find file with path for the folder %s", argv[2]);
+		if (!folderPath) {
+			logMessage(3, "Couldn't find file with path for the folder %s", argv[2]);
 			_exit(1);
 		}
 		logMessage(0, "Starting removal of folder %s", folderPath);
-		removeFolder(folderPath);
+		if (removeFolder(folderPath)) {
+			logMessage(1, "SmartFolder %s deleted", argv[2]);
+		} else {
+			logMessage(3, "SmartFolder wasn't removed");
+		}
 	} else {
 		printf("Usage:\nSmartFolder <LinkDirectory> <SearchDirectory> [searchExpression]\nSmartFolder -d <RunningFolder>\n");
 	}

@@ -147,6 +147,10 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a933198a7d583b279ff7ab007c641337b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sys_file_8h.html#a933198a7d583b279ff7ab007c641337b">createSysFile</a> (int pid, char *smartFolder)</td></tr>
 <tr class="separator:a933198a7d583b279ff7ab007c641337b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae654a902ef0f52a83964320fff84792c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sys_file_8h.html#ae654a902ef0f52a83964320fff84792c">getPID</a> (const char *folderName)</td></tr>
+<tr class="separator:ae654a902ef0f52a83964320fff84792c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9de679c8083d1ae8ba2efb22a0f45458"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sys_file_8h.html#a9de679c8083d1ae8ba2efb22a0f45458">getFolderPath</a> (int pid)</td></tr>
+<tr class="separator:a9de679c8083d1ae8ba2efb22a0f45458"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Header file that contains the definitions for the writing of files about our folder execution. </p>
@@ -199,6 +203,52 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on success, 1 otherwise </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9de679c8083d1ae8ba2efb22a0f45458"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* getFolderPath </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Function to retrieve the full path of a SmartFolder </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pid</td><td>The PID of the process running the folder </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The full path of the SmartFolder, NULL if not found </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae654a902ef0f52a83964320fff84792c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getPID </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>folderName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Function to retrieve the PID of a running folder </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">folderName</td><td>The name of the SmartFolder </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The PID of the process running that Folder, -1 if not found </dd></dl>
 
 </div>
 </div>

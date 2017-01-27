@@ -14,7 +14,7 @@
  * We will output anything over that level
  */
 #ifndef LOG_LEVEL
-#define LOG_LEVEL 0
+#define LOG_LEVEL 1
 #endif
 
 #include <stdio.h>

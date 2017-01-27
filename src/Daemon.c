@@ -9,8 +9,9 @@
 
 #include "Daemon.h"
 
-void incrementalSearch(const char** expression, int exprLen, char* searchFolder, char* smartFolder, HashSet* files, List* filesList) {
-	logMessage(0, "Daemon Started");
+void incrementalSearch(const char** expression, int exprLen, char* searchFolder, char* smartFolder, HashSet* files,
+					   List* filesList) {
+	logMessage(1, "Background daemon Started");
 	dumpSet(files);
 
 	while (1) {
@@ -18,28 +19,30 @@ void incrementalSearch(const char** expression, int exprLen, char* searchFolder,
 		List* result = initList();
 		evaluateAndSearch(expression, exprLen, searchFolder, &result);
 
-		HashSet* resultSet = initSet(result->size*result->size);
-		putAll(resultSet,result);
+		HashSet* resultSet = initSet(result->size * result->size);
+		putAll(resultSet, result);
 
 		ListElement* tmp = result->head;
 		while (tmp) {
 			if (!contains(files, tmp->data)) {
-				logMessage(0, "New file found: %s", tmp->data);
+				logMessage(1, "New file found: %s", tmp->data);
 				put(files, tmp->data);
-				insert(filesList,tmp->data);
-				if(!makeLink(tmp->data, smartFolder)){
-					logMessage(2,"Couldn't create link for %s", tmp->data);
+				insert(filesList, tmp->data);
+				if (!makeLink(tmp->data, smartFolder)) {
+					logMessage(2, "Couldn't create link for %s", tmp->data);
+				}else{
+					logMessage(1, "Link created for %s", tmp->data);
 				}
 			}
 			tmp = tmp->next;
 		}
 
 		tmp = filesList->head;
-		while(tmp){
-			if(!contains(resultSet,tmp->data)){
+		while (tmp) {
+			if (!contains(resultSet, tmp->data)) {
 				logMessage(1, "The file %s doesn't exist anymore", tmp->data);
-				removeLink(tmp->data,smartFolder);
-				removeObject(filesList,tmp->data);
+				removeLink(tmp->data, smartFolder);
+				removeObject(filesList, tmp->data);
 				removeFromSet(files, tmp->data);
 
 			}

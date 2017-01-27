@@ -145,7 +145,7 @@ void deleteList(List* l) {
 void dumpList(List* l) {
 	ListElement* le = l->head;
 	for (int i = 0; i < l->size; i++) {
-		logMessage(0, "Index %i => %s ", i, le->data);
+		logMessage(1, "Index %i => %s ", i, le->data);
 		le = le->next;
 	}
 }

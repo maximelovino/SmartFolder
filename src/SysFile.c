@@ -33,11 +33,11 @@ int createSysFile(int pid, char* smartFolder) {
 }
 
 
-int getPID(const char* folderName){
+int getPID(const char* folderName) {
 	char fileToOpen[512];
-	sprintf(fileToOpen,"%s%s",SYSFILE_PATH,folderName);
+	sprintf(fileToOpen, "%s%s", SYSFILE_PATH, folderName);
 	FILE* fp = fopen(fileToOpen, "r");
-	if (!fp){
+	if (!fp) {
 		return -1;
 	}
 	char* line = NULL;
@@ -47,7 +47,7 @@ int getPID(const char* folderName){
 		pidToKill = atoi(line);
 		logMessage(0, "The folder is at pid %d", pidToKill);
 	}
-	if (line){
+	if (line) {
 		free(line);
 	}
 	fclose(fp);
@@ -59,11 +59,11 @@ int getPID(const char* folderName){
 	return pidToKill;
 }
 
-char* getFolderPath(int pid){
+char* getFolderPath(int pid) {
 	char fileToOpen[512];
-	sprintf(fileToOpen,"%s%i",SYSFILE_PATH,pid);
+	sprintf(fileToOpen, "%s%i", SYSFILE_PATH, pid);
 	FILE* fp = fopen(fileToOpen, "r");
-	if (!fp){
+	if (!fp) {
 		return NULL;
 	}
 	char* line = NULL;
@@ -76,7 +76,7 @@ char* getFolderPath(int pid){
 			logMessage(0, "File deleted %s", fileToOpen);
 		}
 		return line;
-	}else{
+	} else {
 		return NULL;
 	}
 }

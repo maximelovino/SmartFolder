@@ -106,7 +106,7 @@ int isValidSearch(searchType st, const char* arg) {
 			   st == USAGE_DATE_B || st == USAGE_DATE_A || st == STATUS_DATE_E || st == MODIF_DATE_E ||
 			   st == USAGE_DATE_E) {
 		unsigned int starti = !(st == STATUS_DATE_E || st == MODIF_DATE_E || st == USAGE_DATE_E);
-		if(strlen(arg) != 10+starti) return 0;
+		if (strlen(arg) != 10 + starti) return 0;
 		for (unsigned int i = starti; arg[i]; i++) {
 			if (i == 4 + starti || i == 7 + starti) {
 				//skip separator
@@ -214,7 +214,7 @@ const void* prepareArgument(searchType st, const char* arg) {
 			*perms = strtoul(arg, NULL, 8);
 			return perms;
 		case NAME:
-			return (const char*)arg;
+			return (const char*) arg;
 		default:
 			return NULL;
 	}
@@ -252,7 +252,7 @@ const char* trimArgument(searchType st, const char* arg) {
 		int s = strlen(arg);
 		char* narg = malloc(s);
 		strcpy(narg, &arg[1]);
-		return (const char*)narg;
+		return (const char*) narg;
 	}
-	return (const char*)arg;
+	return (const char*) arg;
 }
