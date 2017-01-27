@@ -1,7 +1,11 @@
 #include "Linker.h"
-
+#include <stdio.h>
 int main() {
-	int returnVal = makeLink("/home/lovino/Documents/a.txt", "/home/lovino/Desktop");
-	printf("%i\n", returnVal);
+	char name[] = "Test";
+	printf("%s\n",name);
+	for (int i = 0; i < 10; ++i) {
+		nextSuffix(name);
+		printf("%s\n",name);
+	}
 	return 0;
 }

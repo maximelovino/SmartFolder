@@ -1,0 +1,10 @@
+<map id="SmartFolder/src/Daemon.h" name="SmartFolder/src/Daemon.h">
+<area shape="rect" id="node2" href="$_parser_8h.html" title="Header file that contains the definitions of our Parser. " alt="" coords="366,80,436,107"/>
+<area shape="rect" id="node22" href="$_linker_8h.html" title="Header file that contains the definitions for the functions that will take care of the SmartFolder cr..." alt="" coords="750,155,818,181"/>
+<area shape="rect" id="node24" href="$_hash_set_8h.html" title="Header file that contains the definitions for a HashSet data structure containing Strings..." alt="" coords="31,155,115,181"/>
+<area shape="rect" id="node7" href="$_search_8h.html" title="Header file that contains the definitions of our Search (crawler) " alt="" coords="554,155,629,181"/>
+<area shape="rect" id="node10" href="$_syscall_8h.html" title="Header file that contains the definitions for system calls wrapper functions used in our program..." alt="" coords="818,229,894,256"/>
+<area shape="rect" id="node17" href="$_logger_8h.html" title="Header file that contains the definitions for logging to the console. " alt="" coords="369,304,441,331"/>
+<area shape="rect" id="node19" href="$_list_8h.html" title="Header file that contains the definitions for a simple linked List data structure containing Strings..." alt="" coords="242,229,296,256"/>
+<area shape="rect" id="node20" href="$_stack_8h.html" title="Header file that contains the definitions for a generic Stack data structure. " alt="" coords="372,229,438,256"/>
+</map>

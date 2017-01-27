@@ -50,11 +50,7 @@ inline int saccess(char* path) {
 }
 
 inline int sunlink(char* file) {
-	if (saccess(file)) {
-		int i = unlink(file);
-		if (i == 0) return 1;
-	}
-	return 0;
+	return unlink(file) == 0;
 }
 
 inline int srmdir(char* path) {

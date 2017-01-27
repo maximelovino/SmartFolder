@@ -12,6 +12,7 @@
 #include "Linker.h"
 #include "Daemon.h"
 #include "SysFile.h"
+#include <signal.h>
 
 /**
  * Main function of our program, this will run when the program is called

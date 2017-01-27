@@ -11,7 +11,6 @@
 #define _LINKER_H_
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 #include <dirent.h>
@@ -26,6 +25,20 @@
  * @return 1 on succes, 0 otherwise
  */
 int makeLink(char* pathToLink, char* destFolder);
+
+/**
+ * Function to remove a link
+ * @param pathOfFile The path of the file linked by the link we want to remove
+ * @param linkFolder The folder where the links are stored
+ * @return 1 on success, 0 otherwise
+ */
+int removeLink(char* pathOfFile, char* linkFolder);
+
+/**
+ * Function to add the next suffix to a name (if no suffix, it will add (1), otherwise it will just increment the count)
+ * @param name The current name of the file
+ */
+void nextSuffix(char* name);
 
 /**
  * Function that creates the SmartFolder and links for all files in the list

@@ -10,9 +10,7 @@
 #ifndef _HASH_SET_
 #define _HASH_SET_
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
 #include "Logger.h"
 #include "List.h"

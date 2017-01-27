@@ -1,0 +1,7 @@
+<map id="SmartFolder/src/Parser.h" name="SmartFolder/src/Parser.h">
+<area shape="rect" id="node6" href="$_search_8h.html" title="Header file that contains the definitions of our Search (crawler) " alt="" coords="461,80,536,107"/>
+<area shape="rect" id="node9" href="$_syscall_8h.html" title="Header file that contains the definitions for system calls wrapper functions used in our program..." alt="" coords="669,155,745,181"/>
+<area shape="rect" id="node16" href="$_logger_8h.html" title="Header file that contains the definitions for logging to the console. " alt="" coords="385,229,457,256"/>
+<area shape="rect" id="node18" href="$_list_8h.html" title="Header file that contains the definitions for a simple linked List data structure containing Strings..." alt="" coords="241,155,295,181"/>
+<area shape="rect" id="node19" href="$_stack_8h.html" title="Header file that contains the definitions for a generic Stack data structure. " alt="" coords="320,155,387,181"/>
+</map>
