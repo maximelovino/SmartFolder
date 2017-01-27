@@ -31,8 +31,9 @@ int sfork();
  * symlink wrapper
  * @param  target   real file
  * @param  linkPath link path
+ * @return 1 on success, 0 otherwise
  */
-void ssymlink(char* target, char* linkPath);
+int ssymlink(char* target, char* linkPath);
 
 /**
  * basename wrapper
@@ -44,8 +45,9 @@ char* sbasename(char* fullPath);
 /**
  * mkdir wrapper
  * @param  path path to create
+ * @return 1 on success, 0 otherwise
  */
-void smkdir(char* path);
+int smkdir(char* path);
 
 /**
  * touch wrapper
@@ -64,14 +66,16 @@ int saccess(char* path);
 /**
  * unlink wrapper
  * @param  file file to unlink
+ * @return 1 on success, 0 otherwise
  */
-void sunlink(char* file);
+int sunlink(char* file);
 
 /**
  * rmdir wrapper
  * @param  path directory to remove
+ * @return 1 on success, 0 otherwise
  */
-void srmdir(char* path);
+int srmdir(char* path);
 
 /**
  * getpwnam->pw_uid wrapper
@@ -91,8 +95,9 @@ int sgetgrgid(char* groupName);
  * lstat wrapper
  * @param  name    file to check
  * @param  statbuf buffer to write info to
+ * @return 1 on success, 0 otherwise
  */
-void slstat(char* name, struct stat* statbuf);
+int slstat(char* name, struct stat* statbuf);
 
 /**
  * opendir wrapper
@@ -104,14 +109,16 @@ DIR* sopendir(char* name);
 /**
  * chdir wrapper
  * @param  name directory to go to
+ * @return 1 on success, 0 otherwise
  */
-void schdir(char* name);
+int schdir(char* name);
 
 /**
  * closedir wrapper
  * @param  dp directory to close
+ * @return 1 on success, 0 otherwise
  */
-void sclosedir(DIR* dp);
+int sclosedir(DIR* dp);
 
 /**
  * readdir wrapper

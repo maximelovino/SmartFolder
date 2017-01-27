@@ -76,7 +76,7 @@ int main(int argc, char const* argv[]) {
 		}
 
 		fclose(tmpFile);
-		if (sunlink(pathTmpFile) == -1) {
+		if (!sunlink(pathTmpFile)) {
 			logMessage(2, "Couldn't delete file %s", pathTmpFile);
 			_exit(1);
 		} else {
@@ -90,9 +90,10 @@ int main(int argc, char const* argv[]) {
 		if (getline(&line, &size, secondFP) != -1) {
 			logMessage(0, "Starting removal of folder %s", line);
 			removeFolder(line);
+			//TODO test this return
 		}
 		fclose(secondFP);
-		if (sunlink(secondFile) == -1) {
+		if (!sunlink(secondFile)) {
 			logMessage(2, "Couldn't delete file %s", secondFile);
 			_exit(1);
 		} else {

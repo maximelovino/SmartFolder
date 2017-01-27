@@ -21,8 +21,10 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 		return NULL;
 	}
 	schdir(rootDir);
+	//TODO check return
 	while ((entry = sreaddir(dp)) != NULL) {
 		slstat(entry->d_name, &statbuf);
+		//TODO test this return
 		if (sS_ISLNK(statbuf.st_mode)) continue;
 		if (sS_ISDIR(statbuf.st_mode)) {
 			if (strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0) {
@@ -140,8 +142,9 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 		}
 	}
 	schdir("..");
+	//TODO check return
 	sclosedir(dp);
-
+	//TODO check return
 	return result;
 }
 

@@ -23,7 +23,7 @@ void incrementalSearch(char** expression, int exprLen, char* searchFolder, char*
 				logMessage(0, "New file found: %s", tmp->data);
 				put(files, tmp->data);
 				makeLink(tmp->data, smartFolder);
-				//dumpSet(files);
+				//TODO check return val
 			}
 			tmp = tmp->next;
 		}
