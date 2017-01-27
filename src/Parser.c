@@ -82,7 +82,7 @@ searchType getSearchType(char* param, char* arg) {
 	} else if (strcmp(param, "--perms") == 0) {
 		return MODE;
 	}
-	return -1;
+	return NONE;
 }
 
 
@@ -106,6 +106,7 @@ int isValidSearch(searchType st, char* arg) {
 			   st == USAGE_DATE_B || st == USAGE_DATE_A || st == STATUS_DATE_E || st == MODIF_DATE_E ||
 			   st == USAGE_DATE_E) {
 		int starti = !(st == STATUS_DATE_E || st == MODIF_DATE_E || st == USAGE_DATE_E);
+		if(strlen(arg) != 10+starti) return 0;
 		for (int i = starti; arg[i]; i++) {
 			if (i == 4 + starti || i == 7 + starti) {
 				//skip separator
@@ -137,7 +138,7 @@ int evaluateAndSearch(char** expression, int exprLen, char* folder, List** resul
 		char* p1 = expression[i];
 		if (!isBooleanOp(p1)) {
 			searchType st = getSearchType(p1, expression[i + 1]);
-			if (st == -1) {
+			if (st == NONE) {
 				logMessage(3, "This search doesn't exists");
 				return -1;
 			}

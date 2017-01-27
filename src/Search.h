@@ -21,6 +21,7 @@
 
 
 typedef enum {
+  NONE,
 	NAME,
 	SIZE_SMALLER,
 	SIZE_EQUAL,

@@ -22,7 +22,7 @@
 int main(int argc, char const* argv[]) {
 	if (argc > 3) {
 		if (isValidPath(argv[1]) && isValidPath(argv[2])) {
-			char* smartFolderPath[strlen(argv[1])];
+			char smartFolderPath[strlen(argv[1])+1];
 			char* searchPath;
 			strcpy(smartFolderPath, argv[1]);
 			searchPath = srealpath(argv[2], NULL);
