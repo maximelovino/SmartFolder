@@ -72,10 +72,6 @@ inline int slstat(const char* name, struct stat* statbuf) {
 
 inline DIR* sopendir(const char* name) {
 	DIR* dp = opendir(name);
-	if (dp == NULL) {
-		logMessage(3, "opendir failed ! %s", name);
-		_exit(1);
-	}
 	return dp;
 }
 
