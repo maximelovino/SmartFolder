@@ -12,9 +12,25 @@
 int makeLink(char* pathToLink, char* destFolder) {
 	char* fileName = sbasename(pathToLink);
 	char linkName[1024];
+	char suffix[512];
+	int suffixValue = 1;
 	strcpy(linkName, destFolder);
 	strcat(linkName, "/");
 	strcat(linkName, fileName);
+	if (saccess(linkName)){
+		while(1){
+			sprintf(suffix,"(%i)", suffixValue);
+			char newName[512];
+			strcpy(newName,linkName);
+			strcat(newName,suffix);
+			if (saccess(newName)){
+				suffixValue++;
+			}else{
+				strcpy(linkName,newName);
+				break;
+			}
+		}
+	}
 	logMessage(0, "Attempting link creation: %s => %s", pathToLink, linkName);
 	return ssymlink(pathToLink, linkName);
 }

@@ -10,6 +10,7 @@
 #include "HashSet.h"
 
 HashSet* initSet(int size) {
+	if (size < 1) size = 1;
 	HashSet* table = malloc(sizeof(HashSet));
 	table->table = calloc(size, sizeof(char*));
 	table->size = size;

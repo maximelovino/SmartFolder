@@ -1,5 +1,5 @@
 /**
- * @file Parser.h
+ * @file Parser.c
  * @brief Source file that contains the implementation of our Parser
  *
  * @authors Maxime Lovino, Thomas Ibanez

@@ -28,9 +28,7 @@ int main(int argc, char const* argv[]) {
 			searchPath = srealpath(argv[2], NULL);
 			logMessage(0, "We search in %s => %s", argv[2], searchPath);
 			logMessage(0, "We put in %s => %s", argv[1], smartFolderPath);
-			List set;
-			List* files = &set;
-			initList(files, 100);
+			List* files = initList();
 			int k = evaluateAndSearch(&(argv[3]), argc - 3, searchPath, &files);
 			if (k == -1) {
 				logMessage(3, "Error while searching");
@@ -44,7 +42,7 @@ int main(int argc, char const* argv[]) {
 					//the optimal size of a hashset is n²
 					HashSet* set = initSet(files->size * files->size);
 					putAll(set, files);
-					incrementalSearch(&(argv[3]), argc - 3, searchPath, smartFolderPath, set);
+					incrementalSearch(&(argv[3]), argc - 3, searchPath, smartFolderPath, set, files);
 				} else if (pid > 0) {
 					logMessage(0, "The child is at process %d", pid);
 					if (createSysFile(pid, smartFolderPath)) {
