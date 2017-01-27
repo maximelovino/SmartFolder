@@ -9,7 +9,7 @@
 
 #include "Search.h"
 
-List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
+List* searchDirectory(const char* rootDir, searchType type, void* searchArg) {
 	List* result = initList();
 
 	DIR* dp;
@@ -39,9 +39,9 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 
 			int size;
 			char* searchString;
-			int uid;
-			int gid;
-			unsigned long perms;
+			unsigned int uid;
+			unsigned int gid;
+		 	mode_t perms;
 
 			switch (type) {
 				case NAME:
@@ -117,20 +117,20 @@ List* searchDirectory(char* rootDir, searchType type, void* searchArg) {
 					}
 					break;
 				case OWNER:
-					uid = *((int*) searchArg);
+					uid = *((unsigned int*) searchArg);
 					if (statbuf.st_uid == uid) {
 						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case GROUP:
-					gid = *((int*) searchArg);
+					gid = *((unsigned int*) searchArg);
 					if (statbuf.st_gid == gid) {
 						insert(result, srealpath(entry->d_name, NULL));
 					}
 					break;
 				case MODE:
 					perms = *((unsigned long*) searchArg);
-					int permsMask = statbuf.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
+					unsigned int permsMask = statbuf.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
 					if (perms == permsMask) {
 						insert(result, srealpath(entry->d_name, NULL));
 					}

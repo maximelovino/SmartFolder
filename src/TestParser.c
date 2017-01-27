@@ -1,7 +1,7 @@
 #include "Parser.h"
 #include <stdio.h>
 
-int main(int argc, char const* argv[]) {
+int main() {
 	printf("Root has id %i\n", sgetpwuid("root"));
 	printf("Staff has id %i\n", sgetgrgid("staff"));
 	printf("Time %li\n", getTimeSpec("2016.10.11")->tv_sec);

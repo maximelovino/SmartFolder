@@ -82,14 +82,14 @@ int srmdir(char* path);
  * @param  userName the username to get uid from
  * @return          uid linked to the username
  */
-int sgetpwuid(char* userName);
+int sgetpwuid(const char* userName);
 
 /**
  * getgrnam->gr_gid wrapper
  * @param  groupName groupname to get gid from
  * @return           gid linked to this groupname
  */
-int sgetgrgid(char* groupName);
+int sgetgrgid(const char* groupName);
 
 /**
  * lstat wrapper
@@ -97,21 +97,21 @@ int sgetgrgid(char* groupName);
  * @param  statbuf buffer to write info to
  * @return 1 on success, 0 otherwise
  */
-int slstat(char* name, struct stat* statbuf);
+int slstat(const char* name, struct stat* statbuf);
 
 /**
  * opendir wrapper
  * @param  name directory to open
  * @return      DIR* to the directory
  */
-DIR* sopendir(char* name);
+DIR* sopendir(const char* name);
 
 /**
  * chdir wrapper
  * @param  name directory to go to
  * @return 1 on success, 0 otherwise
  */
-int schdir(char* name);
+int schdir(const char* name);
 
 /**
  * closedir wrapper
@@ -154,6 +154,6 @@ int sS_ISREG(mode_t m);
  * @param  buf buffer to write the realpath to (optional)
  * @return     if the buffer is NULL, return the realpath
  */
-char* srealpath(char* p, char* buf);
+char* srealpath(const char* p, char* buf);
 
 #endif /* end of include guard: _SYSCALL_H_ */

@@ -9,7 +9,7 @@
 
 #include "Daemon.h"
 
-void incrementalSearch(char** expression, int exprLen, char* searchFolder, char* smartFolder, HashSet* files, List* filesList) {
+void incrementalSearch(const char** expression, int exprLen, char* searchFolder, char* smartFolder, HashSet* files, List* filesList) {
 	logMessage(0, "Daemon Started");
 	dumpSet(files);
 

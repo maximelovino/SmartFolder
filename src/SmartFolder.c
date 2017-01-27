@@ -65,7 +65,7 @@ int main(int argc, char const* argv[]) {
 			_exit(1);
 		}
 		char* line = NULL;
-		unsigned int size = 0;
+	 	size_t size = 0;
 		int pidToKill = 0;
 		if (getline(&line, &size, tmpFile) != -1) {
 			pidToKill = atoi(line);

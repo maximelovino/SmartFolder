@@ -9,7 +9,7 @@
 
 #include "Parser.h"
 
-int isValidPath(char* path) {
+int isValidPath(const char* path) {
 	static regex_t regex;
 	static int compiled;
 	if (!compiled) {
@@ -23,7 +23,7 @@ int isValidPath(char* path) {
 	return !regexec(&regex, path, 0, NULL, 0);
 }
 
-struct timespec* getTimeSpec(char* date) {
+struct timespec* getTimeSpec(const char* date) {
 	struct timespec* t = calloc(sizeof(struct timespec), 1);
 	struct tm* timeMachine = calloc(sizeof(struct tm), 1);
 	char year[5];
@@ -44,7 +44,7 @@ struct timespec* getTimeSpec(char* date) {
 	return t;
 }
 
-searchType getSearchType(char* param, char* arg) {
+searchType getSearchType(const char* param, const char* arg) {
 	if (strcmp(param, "--name") == 0) {
 		return NAME;
 	} else if (strcmp(param, "--size") == 0) {
@@ -91,7 +91,7 @@ int isBooleanOp(char* word) {
 			strcmp(word, "NOT") & strcmp(word, "xor") & strcmp(word, "XOR")) == 0;
 }
 
-int isValidSearch(searchType st, char* arg) {
+int isValidSearch(searchType st, const char* arg) {
 	if (st == NAME) {
 		return 1;
 	} else if (st == SIZE_SMALLER || st == SIZE_BIGGER || st == SIZE_EQUAL) {
@@ -105,9 +105,9 @@ int isValidSearch(searchType st, char* arg) {
 	} else if (st == STATUS_DATE_B || st == STATUS_DATE_A || st == MODIF_DATE_B || st == MODIF_DATE_A ||
 			   st == USAGE_DATE_B || st == USAGE_DATE_A || st == STATUS_DATE_E || st == MODIF_DATE_E ||
 			   st == USAGE_DATE_E) {
-		int starti = !(st == STATUS_DATE_E || st == MODIF_DATE_E || st == USAGE_DATE_E);
+		unsigned int starti = !(st == STATUS_DATE_E || st == MODIF_DATE_E || st == USAGE_DATE_E);
 		if(strlen(arg) != 10+starti) return 0;
-		for (int i = starti; arg[i]; i++) {
+		for (unsigned int i = starti; arg[i]; i++) {
 			if (i == 4 + starti || i == 7 + starti) {
 				//skip separator
 				continue;
@@ -132,7 +132,7 @@ int isValidSearch(searchType st, char* arg) {
 	return 0;
 }
 
-int evaluateAndSearch(char** expression, int exprLen, char* folder, List** result) {
+int evaluateAndSearch(const char** expression, int exprLen, char* folder, List** result) {
 	Stack* s = initStack();
 	for (int i = 0; i < exprLen; i += 2) {
 		char* p1 = expression[i];
@@ -179,7 +179,7 @@ int evaluateAndSearch(char** expression, int exprLen, char* folder, List** resul
 	return 0;
 }
 
-void* prepareArgument(searchType st, char* arg) {
+void* prepareArgument(searchType st, const char* arg) {
 	arg = trimArgument(st, arg);
 	logMessage(0, arg);
 	int* intVal = malloc(sizeof(int));
@@ -215,10 +215,12 @@ void* prepareArgument(searchType st, char* arg) {
 			return perms;
 		case NAME:
 			return arg;
+		default:
+			return NULL;
 	}
 }
 
-int getSize(char* sizeAsString) {
+int getSize(const char* sizeAsString) {
 	logMessage(0, "Hello %s", sizeAsString);
 	char unit = sizeAsString[strlen(sizeAsString) - 1];
 	if (unit >= '0' && unit <= '9') {
@@ -244,7 +246,7 @@ int getSize(char* sizeAsString) {
 	}
 }
 
-char* trimArgument(searchType st, char* arg) {
+char* trimArgument(searchType st, const char* arg) {
 	if (st == SIZE_BIGGER || st == SIZE_SMALLER || st == STATUS_DATE_B || st == STATUS_DATE_A || st == MODIF_DATE_B ||
 		st == MODIF_DATE_A || st == USAGE_DATE_B || st == USAGE_DATE_A) {
 		int s = strlen(arg);

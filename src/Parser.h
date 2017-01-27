@@ -31,14 +31,14 @@
  * @param path The path we want to check
  * @return 1 if the path is valid, 0 otherwise
  */
-int isValidPath(char* path);
+int isValidPath(const char* path);
 
 /**
  * Function to convert a date in YYYY-MM-DD format to a timespec
  * @param date The date as a String in the format YYYY-MM-DD
  * @return The date as a a pointer of struct timespec
  */
-struct timespec* getTimeSpec(char* date);
+struct timespec* getTimeSpec(const char* date);
 
 /**
  * Converts a search word to a searchType
@@ -46,7 +46,7 @@ struct timespec* getTimeSpec(char* date);
  * @param  arg   the parameter linked to the search word
  * @return       the corresponding searchType or -1 if no match exists
  */
-searchType getSearchType(char* param, char* arg);
+searchType getSearchType(const char* param, const char* arg);
 
 /**
  * Checks if a word is a boolean operator
@@ -61,7 +61,7 @@ int isBooleanOp(char* word);
  * @param  arg The argument
  * @return     1 if the search is valid, 0 otherwise
  */
-int isValidSearch(searchType st, char* arg);
+int isValidSearch(searchType st, const char* arg);
 
 /**
  * Evaluates an expression and searches for matching files
@@ -71,7 +71,7 @@ int isValidSearch(searchType st, char* arg);
  * @param  result     A List to put the results of the search in
  * @return            0 if the search was ok, 1 otherwise
  */
-int evaluateAndSearch(char** expression, int exprLen, char* folder, List** result);
+int evaluateAndSearch(const char** expression, int exprLen, char* folder, List** result);
 
 /**
  * Function that returns a generic pointer to an argument for a search of a certain type
@@ -80,14 +80,14 @@ int evaluateAndSearch(char** expression, int exprLen, char* folder, List** resul
  * @param arg The argument as a string
  * @return A pointer to the argument in the correct type
  */
-void* prepareArgument(searchType st, char* arg);
+void* prepareArgument(searchType st, const char* arg);
 
 /**
  * Converts a size with its Unit suffix (K, M, G, T) to the correct size
  * @param sizeAsString The size with its suffix
  * @return The size as an integer value
  */
-int getSize(char* sizeAsString);
+int getSize(const char* sizeAsString);
 
 /**
  * Removes the + or - before a search argument if necessary
@@ -95,6 +95,6 @@ int getSize(char* sizeAsString);
  * @param  arg argument to trim
  * @return     Trimmed argument
  */
-char* trimArgument(searchType st, char* arg);
+char* trimArgument(searchType st, const char* arg);
 
 #endif /* end of include guard: _PARSER_H_ */

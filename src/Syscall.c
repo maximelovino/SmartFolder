@@ -62,20 +62,19 @@ inline int srmdir(char* path) {
 	return i == 0;
 }
 
-inline int sgetpwuid(char* userName) {
+inline int sgetpwuid(const char* userName) {
 	return getpwnam(userName)->pw_uid;
 }
 
-inline int sgetgrgid(char* groupName) {
+inline int sgetgrgid(const char* groupName) {
 	return getgrnam(groupName)->gr_gid;
 }
 
-inline int slstat(char* name, struct stat* statbuf) {
-	int i = lstat(name, statbuf);
-	return 1 == 0;
+inline int slstat(const char* name, struct stat* statbuf) {
+	return lstat(name, statbuf) == 0;
 }
 
-inline DIR* sopendir(char* name) {
+inline DIR* sopendir(const char* name) {
 	DIR* dp = opendir(name);
 	if (dp == NULL) {
 		logMessage(3, "opendir failed ! %s", name);
@@ -84,7 +83,7 @@ inline DIR* sopendir(char* name) {
 	return dp;
 }
 
-inline int schdir(char* name) {
+inline int schdir(const char* name) {
 	return chdir(name) == 0;
 }
 
@@ -108,6 +107,6 @@ inline int sS_ISREG(mode_t m) {
 	return S_ISREG(m);
 }
 
-inline char* srealpath(char* p, char* buf) {
+inline char* srealpath(const char* p, char* buf) {
 	return realpath(p, buf);
 }
