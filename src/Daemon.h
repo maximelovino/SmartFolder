@@ -10,7 +10,6 @@
 #ifndef _DEAMON_H_
 #define _DEAMON_H_
 
-#include <signal.h>
 #include "Parser.h"
 #include "Linker.h"
 #include "HashSet.h"

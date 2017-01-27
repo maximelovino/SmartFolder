@@ -12,27 +12,43 @@
 int makeLink(char* pathToLink, char* destFolder) {
 	char* fileName = sbasename(pathToLink);
 	char linkName[1024];
-	char suffix[512];
-	int suffixValue = 1;
-	strcpy(linkName, destFolder);
-	strcat(linkName, "/");
-	strcat(linkName, fileName);
-	if (saccess(linkName)){
-		while(1){
-			sprintf(suffix,"(%i)", suffixValue);
-			char newName[512];
-			strcpy(newName,linkName);
-			strcat(newName,suffix);
-			if (saccess(newName)){
-				suffixValue++;
-			}else{
-				strcpy(linkName,newName);
-				break;
-			}
-		}
+	sprintf(linkName,"%s/%s",destFolder,fileName);
+	while (saccess(linkName)){
+		nextSuffix(linkName);
 	}
 	logMessage(0, "Attempting link creation: %s => %s", pathToLink, linkName);
 	return ssymlink(pathToLink, linkName);
+}
+
+int removeLink(char* pathOfFile, char* linkFolder){
+	char* base = sbasename(pathOfFile);
+
+	char linkName[1024];
+	sprintf(linkName, "%s/%s",linkFolder,base);
+	logMessage(0, "Trying to remove %s", linkName);
+
+	while (srealpath(linkName, NULL) && !(saccess(linkName) && (strcmp(srealpath(linkName, NULL),pathOfFile) == 0))){
+		nextSuffix(linkName);
+	}
+	logMessage(0, "Found the link %s", linkName);
+	sunlink(linkName);
+	return 0;
+}
+
+void nextSuffix(char* name){
+	char* firstPar = strrchr(name,'(');
+	if (firstPar){
+		char suffix[40];
+		firstPar++;
+		strcpy(suffix,firstPar);
+		suffix[strlen(suffix)-1] = 0;
+		int suffixValue = atoi(suffix);
+		suffixValue++;
+		firstPar--;
+		sprintf(firstPar,"(%i)",suffixValue);
+	}else{
+		strcat(name,"(1)");
+	}
 }
 
 int makeFolder(char* path, List* files) {

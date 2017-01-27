@@ -37,10 +37,15 @@ void incrementalSearch(const char** expression, int exprLen, char* searchFolder,
 		while(tmp){
 			if(!contains(resultSet,tmp->data)){
 				logMessage(1, "The file %s doesn't exist anymore", tmp->data);
+				//TODO here we must remove from hashset, and fileList, and remove the link
+				removeLink(tmp->data,smartFolder);
+				removeObject(filesList,tmp->data);
+				removeFromSet(files, tmp->data);
+
 			}
 			tmp = tmp->next;
 		}
-
+		deleteSet(&resultSet);
 		deleteList(result);
 		sleep(5);
 	}

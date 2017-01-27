@@ -47,7 +47,6 @@ void put(HashSet* table, char* filePath) {
 	}
 
 	int hashValue = hash(filePath) % table->size;
-	//TODO There has to be a better way
 	while (table->table[hashValue] != 0 ||
 		   (table->table[hashValue] != 0 && strcmp(table->table[hashValue], " ") == 0)) {
 		hashValue++;
@@ -63,7 +62,6 @@ void removeFromSet(HashSet* table, char* filePath) {
 	if (index == -1) {
 		return;
 	}
-	//TODO check if we can free and assign like that
 	free(table->table[index]);
 	//" " represents a freed cell
 	table->table[index] = " ";

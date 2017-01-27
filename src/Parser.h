@@ -18,7 +18,6 @@
 #include <string.h>
 #include <regex.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "Search.h"
 #include "List.h"
 #include "Stack.h"
