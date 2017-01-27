@@ -1,6 +1,0 @@
-<map id="SmartFolder/src/Search.c" name="SmartFolder/src/Search.c">
-<area shape="rect" id="node2" href="$_search_8h.html" title="Header file that contains the definitions of our Search (crawler) " alt="" coords="663,80,737,107"/>
-<area shape="rect" id="node7" href="$_syscall_8h.html" title="Header file that contains the definitions for system calls wrapper functions used in our program..." alt="" coords="478,155,554,181"/>
-<area shape="rect" id="node14" href="$_logger_8h.html" title="Header file that contains the definitions for logging to the console. " alt="" coords="795,229,867,256"/>
-<area shape="rect" id="node16" href="$_list_8h.html" title="Header file that contains the definitions for a simple linked List data structure containing Strings..." alt="" coords="738,155,793,181"/>
-</map>

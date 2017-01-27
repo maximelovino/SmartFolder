@@ -1,6 +1,0 @@
-<map id="SmartFolder/src/Linker.h" name="SmartFolder/src/Linker.h">
-<area shape="rect" id="node2" href="$_daemon_8h.html" title="Header file that contains the definitions for our background process computation. ..." alt="" coords="93,80,272,107"/>
-<area shape="rect" id="node4" href="$_smart_folder_8c.html" title="Main entry point of our program. " alt="" coords="209,155,410,181"/>
-<area shape="rect" id="node5" href="$_linker_8c.html" title="Source file that contains the implementation for the functions that will take care of the SmartFolder..." alt="" coords="347,80,512,107"/>
-<area shape="rect" id="node3" href="$_daemon_8c.html" title="Source file that contains the implementation for our background process computation. " alt="" coords="5,155,184,181"/>
-</map>

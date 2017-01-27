@@ -1,6 +1,0 @@
-<map id="SmartFolder/src/Linker.c" name="SmartFolder/src/Linker.c">
-<area shape="rect" id="node2" href="$_linker_8h.html" title="Header file that contains the definitions for the functions that will take care of the SmartFolder cr..." alt="" coords="743,80,811,107"/>
-<area shape="rect" id="node7" href="$_syscall_8h.html" title="Header file that contains the definitions for system calls wrapper functions used in our program..." alt="" coords="399,155,475,181"/>
-<area shape="rect" id="node15" href="$_logger_8h.html" title="Header file that contains the definitions for logging to the console. " alt="" coords="795,229,867,256"/>
-<area shape="rect" id="node17" href="$_list_8h.html" title="Header file that contains the definitions for a simple linked List data structure containing Strings..." alt="" coords="815,155,870,181"/>
-</map>

@@ -1,0 +1,11 @@
+<map id="/home/lovino/Desktop/SmartFolder/src/Daemon.c" name="/home/lovino/Desktop/SmartFolder/src/Daemon.c">
+<area shape="rect" id="node2" href="$_daemon_8h.html" title="Header file that contains the definitions for our background process computation. ..." alt="" coords="360,95,442,121"/>
+<area shape="rect" id="node3" href="$_parser_8h.html" title="Header file that contains the definitions of our Parser. " alt="" coords="366,169,436,196"/>
+<area shape="rect" id="node23" href="$_linker_8h.html" title="Header file that contains the definitions for the functions that will take care of the SmartFolder cr..." alt="" coords="750,244,818,271"/>
+<area shape="rect" id="node25" href="$_hash_set_8h.html" title="Header file that contains the definitions for a HashSet data structure containing Strings..." alt="" coords="31,244,115,271"/>
+<area shape="rect" id="node8" href="$_search_8h.html" title="Header file that contains the definitions of our Search (crawler) " alt="" coords="554,244,629,271"/>
+<area shape="rect" id="node11" href="$_syscall_8h.html" title="Header file that contains the definitions for system calls wrapper functions used in our program..." alt="" coords="818,319,894,345"/>
+<area shape="rect" id="node18" href="$_logger_8h.html" title="Header file that contains the definitions for logging to the console. " alt="" coords="369,393,441,420"/>
+<area shape="rect" id="node20" href="$_list_8h.html" title="Header file that contains the definitions for a simple linked List data structure containing Strings..." alt="" coords="242,319,296,345"/>
+<area shape="rect" id="node21" href="$_stack_8h.html" title="Header file that contains the definitions for a generic Stack data structure. " alt="" coords="372,319,438,345"/>
+</map>

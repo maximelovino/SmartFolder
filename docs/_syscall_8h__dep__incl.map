@@ -1,0 +1,14 @@
+<map id="/home/lovino/Desktop/SmartFolder/src/Syscall.h" name="/home/lovino/Desktop/SmartFolder/src/Syscall.h">
+<area shape="rect" id="node2" href="$_search_8h.html" title="Header file that contains the definitions of our Search (crawler) " alt="" coords="281,95,456,136"/>
+<area shape="rect" id="node3" href="$_parser_8h.html" title="Header file that contains the definitions of our Parser. " alt="" coords="85,184,257,225"/>
+<area shape="rect" id="node6" href="$_smart_folder_8c.html" title="Main entry point of our program. " alt="" coords="387,363,592,404"/>
+<area shape="rect" id="node9" href="$_linker_8h.html" title="Header file that contains the definitions for the functions that will take care of the SmartFolder cr..." alt="" coords="480,184,649,225"/>
+<area shape="rect" id="node11" href="$_sys_file_8h.html" title="Header file that contains the definitions for the writing of files about our folder execution..." alt="" coords="602,95,780,136"/>
+<area shape="rect" id="node13" href="$_syscall_8c.html" title="Source file that contains the implementation for system calls wrapper functions used in our program..." alt="" coords="981,95,1158,136"/>
+<area shape="rect" id="node8" href="$_search_8c.html" title="Source file that contains the implementation of our Search (crawler) " alt="" coords="281,184,456,225"/>
+<area shape="rect" id="node4" href="$_daemon_8h.html" title="Header file that contains the definitions for our background process computation. ..." alt="" coords="224,273,406,315"/>
+<area shape="rect" id="node7" href="$_parser_8c.html" title="Source file that contains the implementation of our Parser. " alt="" coords="28,273,200,315"/>
+<area shape="rect" id="node5" href="$_daemon_8c.html" title="Source file that contains the implementation for our background process computation. " alt="" coords="180,363,362,404"/>
+<area shape="rect" id="node10" href="$_linker_8c.html" title="Source file that contains the implementation for the functions that will take care of the SmartFolder..." alt="" coords="482,273,652,315"/>
+<area shape="rect" id="node12" href="$_sys_file_8c.html" title="Source file that contains the implementation for the writing of files about our folder execution..." alt="" coords="727,184,906,225"/>
+</map>

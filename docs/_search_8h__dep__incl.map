@@ -1,0 +1,8 @@
+<map id="/home/lovino/Desktop/SmartFolder/src/Search.h" name="/home/lovino/Desktop/SmartFolder/src/Search.h">
+<area shape="rect" id="node2" href="$_parser_8h.html" title="Header file that contains the definitions of our Parser. " alt="" coords="229,95,401,136"/>
+<area shape="rect" id="node7" href="$_search_8c.html" title="Source file that contains the implementation of our Search (crawler) " alt="" coords="425,95,600,136"/>
+<area shape="rect" id="node3" href="$_daemon_8h.html" title="Header file that contains the definitions for our background process computation. ..." alt="" coords="95,184,277,225"/>
+<area shape="rect" id="node5" href="$_smart_folder_8c.html" title="Main entry point of our program. " alt="" coords="213,273,418,315"/>
+<area shape="rect" id="node6" href="$_parser_8c.html" title="Source file that contains the implementation of our Parser. " alt="" coords="353,184,525,225"/>
+<area shape="rect" id="node4" href="$_daemon_8c.html" title="Source file that contains the implementation for our background process computation. " alt="" coords="5,273,188,315"/>
+</map>
