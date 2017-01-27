@@ -9,23 +9,23 @@
 
 #include "List.h"
 
-List *initList() {
-	List *l = malloc(sizeof(List));
+List* initList() {
+	List* l = malloc(sizeof(List));
 	l->head = NULL;
 	l->size = 0;
 	return l;
 }
 
-void insert(List *l, char *element) {
-	ListElement *le = malloc(sizeof(ListElement));
+void insert(List* l, char* element) {
+	ListElement* le = malloc(sizeof(ListElement));
 	le->data = element;
 	le->next = l->head;
 	l->head = le;
 	l->size++;
 }
 
-void removeIndex(List *l, int idx) {
-	ListElement *le = l->head;
+void removeIndex(List* l, int idx) {
+	ListElement* le = l->head;
 	if (idx == 0) {
 		l->head = l->head->next;
 		l->size--;
@@ -39,15 +39,15 @@ void removeIndex(List *l, int idx) {
 	l->size--;
 }
 
-void removeObject(List *l, char *element) {
+void removeObject(List* l, char* element) {
 	int idx = searchInList(l, element);
 	if (idx != -1) {
 		removeIndex(l, idx);
 	}
 }
 
-int searchInList(List *l, char *element) {
-	ListElement *le = l->head;
+int searchInList(List* l, char* element) {
+	ListElement* le = l->head;
 	int i = 0;
 	while (le != NULL) {
 		if (strcmp(le->data, element) == 0)
@@ -58,17 +58,17 @@ int searchInList(List *l, char *element) {
 	return -1;
 }
 
-char *get(List *l, int idx) {
-	ListElement *le = l->head;
+char* get(List* l, int idx) {
+	ListElement* le = l->head;
 	for (int i = 0; i < idx; i++) {
 		le = le->next;
 	}
 	return le->data;
 }
 
-List *listUnion(List *l1, List *l2) {
-	List *newList = initList();
-	ListElement *le = l1->head;
+List* listUnion(List* l1, List* l2) {
+	List* newList = initList();
+	ListElement* le = l1->head;
 	for (int i = 0; i < l1->size; i++) {
 		insert(newList, le->data);
 		le = le->next;
@@ -83,9 +83,9 @@ List *listUnion(List *l1, List *l2) {
 	return newList;
 }
 
-List *listIntersect(List *l1, List *l2) {
-	List *newList = initList();
-	ListElement *le = l1->head;
+List* listIntersect(List* l1, List* l2) {
+	List* newList = initList();
+	ListElement* le = l1->head;
 	for (int i = 0; i < l1->size; i++) {
 		if (searchInList(l2, le->data) != -1) {
 			insert(newList, le->data);
@@ -95,9 +95,9 @@ List *listIntersect(List *l1, List *l2) {
 	return newList;
 }
 
-List *listXOR(List *l1, List *l2) {
-	List *newList = initList();
-	ListElement *le = l1->head;
+List* listXOR(List* l1, List* l2) {
+	List* newList = initList();
+	ListElement* le = l1->head;
 
 	for (int i = 0; i < l1->size; i++) {
 		if (searchInList(l2, le->data) == -1) {
@@ -118,9 +118,9 @@ List *listXOR(List *l1, List *l2) {
 	return newList;
 }
 
-List *listComplement(List *l1, List *l2) {
-	List *newList = initList();
-	ListElement *le = l1->head;
+List* listComplement(List* l1, List* l2) {
+	List* newList = initList();
+	ListElement* le = l1->head;
 
 	for (int i = 0; i < l1->size; i++) {
 		if (searchInList(l2, le->data) == -1) {
@@ -131,19 +131,19 @@ List *listComplement(List *l1, List *l2) {
 	return newList;
 }
 
-void deleteList(List *l) {
+void deleteList(List* l) {
 	if (l == NULL)
 		return;
 	while (l->head) {
-		ListElement *next = l->head->next;
+		ListElement* next = l->head->next;
 		free(l->head);
 		l->head = next;
 	}
 	free(l);
 }
 
-void dumpList(List *l) {
-	ListElement *le = l->head;
+void dumpList(List* l) {
+	ListElement* le = l->head;
 	for (int i = 0; i < l->size; i++) {
 		logMessage(0, "Index %i => %s ", i, le->data);
 		le = le->next;

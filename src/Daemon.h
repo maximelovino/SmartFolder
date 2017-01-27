@@ -23,6 +23,6 @@
  * @param smartFolder The path of the SmartFolder
  * @param files An HashSet of the files that already match our expression
  */
-void incrementalSearch(char **expression, int exprLen, char *searchFolder, char *smartFolder, HashSet *files);
+void incrementalSearch(char** expression, int exprLen, char* searchFolder, char* smartFolder, HashSet* files);
 
 #endif /* end of include guard: _DEAMON_H_ */

@@ -46,7 +46,7 @@ typedef enum {
  * @param  searchArg	The argument for the search
  * @return              A list of matching files
  */
-List *searchDirectory(char *rootDir, searchType type, void *searchArg);
+List* searchDirectory(char* rootDir, searchType type, void* searchArg);
 
 /**
  * Function to compare 2 timespecs
@@ -54,6 +54,6 @@ List *searchDirectory(char *rootDir, searchType type, void *searchArg);
  * @param searchTime The one we're comparing it to
  * @return 0 if the date is the same, -1 if the date of the candidate is earlier than the search, 1 otherwise
  */
-int timeCompare(struct timespec *candidate, struct timespec *searchTime);
+int timeCompare(struct timespec* candidate, struct timespec* searchTime);
 
 #endif /* end of include guard: _SEARCH_H_ */

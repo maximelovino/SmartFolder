@@ -25,7 +25,7 @@
  * @param destFolder The destination folder for the link
  * @return -1 on error, 0 otherwise
  */
-int makeLink(char *pathToLink, char *destFolder);
+int makeLink(char* pathToLink, char* destFolder);
 
 /**
  * Function that creates the SmartFolder and links for all files in the list
@@ -33,13 +33,13 @@ int makeLink(char *pathToLink, char *destFolder);
  * @param files A list of files to link
  * @return -1 on error, 0 otherwise
  */
-int makeFolder(char *path, List *files);
+int makeFolder(char* path, List* files);
 
 /**
  * Function that deletes a folder and all its content
  * @param path The path of the folder to delete
  * @return -1 on error, 0 otherwise
  */
-int removeFolder(char *path);
+int removeFolder(char* path);
 
 #endif /* end of include guard: _LINKER_H_ */

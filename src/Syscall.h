@@ -22,33 +22,33 @@
 
 int sfork();
 
-int ssymlink(char *target, char *linkPath);
+int ssymlink(char* target, char* linkPath);
 
-char *sbasename(char *fullPath);
+char* sbasename(char* fullPath);
 
-int smkdir(char *path);
+int smkdir(char* path);
 
-FILE *stouch(char *file);
+FILE* stouch(char* file);
 
-int saccess(char *path);
+int saccess(char* path);
 
-int sunlink(char *file);
+int sunlink(char* file);
 
-int srmdir(char *path);
+int srmdir(char* path);
 
-int sgetpwuid(char *userName);
+int sgetpwuid(char* userName);
 
-int sgetgrgid(char *groupName);
+int sgetgrgid(char* groupName);
 
-int slstat(char *name, struct stat *statbuf);
+int slstat(char* name, struct stat* statbuf);
 
-DIR *sopendir(char *name);
+DIR* sopendir(char* name);
 
-int schdir(char *name);
+int schdir(char* name);
 
-int sclosedir(DIR *dp);
+int sclosedir(DIR* dp);
 
-struct dirent *sreaddir(DIR *dir);
+struct dirent* sreaddir(DIR* dir);
 
 int sS_ISLNK(mode_t m);
 
@@ -56,6 +56,6 @@ int sS_ISDIR(mode_t m);
 
 int sS_ISREG(mode_t m);
 
-char *srealpath(char *p, char *buf);
+char* srealpath(char* p, char* buf);
 
 #endif /* end of include guard: _SYSCALL_H_ */

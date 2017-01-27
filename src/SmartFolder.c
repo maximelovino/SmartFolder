@@ -19,17 +19,17 @@
  * @param argv An array of the arguments passed to the program
  * @return An exit code, 0 if everything went well
  */
-int main(int argc, char const *argv[]) {
+int main(int argc, char const* argv[]) {
 	if (argc > 3) {
 		if (isValidPath(argv[1]) && isValidPath(argv[2])) {
-			char *smartFolderPath[strlen(argv[1])];
-			char *searchPath;
+			char* smartFolderPath[strlen(argv[1])];
+			char* searchPath;
 			strcpy(smartFolderPath, argv[1]);
 			searchPath = srealpath(argv[2], NULL);
 			logMessage(0, "We search in %s => %s", argv[2], searchPath);
 			logMessage(0, "We put in %s => %s", argv[1], smartFolderPath);
 			List set;
-			List *files = &set;
+			List* files = &set;
 			initList(files, 100);
 			int k = evaluateAndSearch(&(argv[3]), argc - 3, searchPath, &files);
 			if (k == -1) {
@@ -42,7 +42,7 @@ int main(int argc, char const *argv[]) {
 				int pid = sfork();
 				if (pid == 0) {
 					//the optimal size of a hashset is n²
-					HashSet *set = initSet(files->size * files->size);
+					HashSet* set = initSet(files->size * files->size);
 					putAll(set, files);
 					incrementalSearch(&(argv[3]), argc - 3, searchPath, smartFolderPath, set);
 				} else if (pid > 0) {
@@ -61,12 +61,12 @@ int main(int argc, char const *argv[]) {
 		strcpy(pathTmpFile, SYSFILE_PATH);
 		strcat(pathTmpFile, argv[2]);
 		logMessage(0, "The file to open is %s", pathTmpFile);
-		FILE *tmpFile = fopen(pathTmpFile, "r");
+		FILE* tmpFile = fopen(pathTmpFile, "r");
 		if (!tmpFile) {
 			logMessage(3, "A smartFolder with this name doesn't exist");
 			_exit(1);
 		}
-		char *line = NULL;
+		char* line = NULL;
 		unsigned int size = 0;
 		int pidToKill = 0;
 		if (getline(&line, &size, tmpFile) != -1) {
@@ -86,7 +86,7 @@ int main(int argc, char const *argv[]) {
 		strcpy(secondFile, SYSFILE_PATH);
 		strcat(secondFile, line);
 		logMessage(0, "Second file is %s", secondFile);
-		FILE *secondFP = fopen(secondFile, "r");
+		FILE* secondFP = fopen(secondFile, "r");
 		if (getline(&line, &size, secondFP) != -1) {
 			logMessage(0, "Starting removal of folder %s", line);
 			removeFolder(line);

@@ -32,6 +32,6 @@
  * @param format String format of the message (like in printf for example)
  * @param ... Variables to insert into the String format (like in printf)
  */
-void logMessage(int level, const char *format, ...);
+void logMessage(int level, const char* format, ...);
 
 #endif /* end of include guard: _LOGGER_H_ */

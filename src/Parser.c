@@ -9,7 +9,7 @@
 
 #include "Parser.h"
 
-int isValidPath(char *path) {
+int isValidPath(char* path) {
 	static regex_t regex;
 	static int compiled;
 	if (!compiled) {
@@ -23,9 +23,9 @@ int isValidPath(char *path) {
 	return !regexec(&regex, path, 0, NULL, 0);
 }
 
-struct timespec *getTimeSpec(char *date) {
-	struct timespec *t = calloc(sizeof(struct timespec),1);
-	struct tm* timeMachine = calloc(sizeof(struct tm),1);
+struct timespec* getTimeSpec(char* date) {
+	struct timespec* t = calloc(sizeof(struct timespec), 1);
+	struct tm* timeMachine = calloc(sizeof(struct tm), 1);
 	char year[5];
 	strncpy(year, date, 4);
 	int yyyy = atoi(year) - 1900;
@@ -44,7 +44,7 @@ struct timespec *getTimeSpec(char *date) {
 	return t;
 }
 
-searchType getSearchType(char *param, char *arg) {
+searchType getSearchType(char* param, char* arg) {
 	if (strcmp(param, "--name") == 0) {
 		return NAME;
 	} else if (strcmp(param, "--size") == 0) {
@@ -86,12 +86,12 @@ searchType getSearchType(char *param, char *arg) {
 }
 
 
-int isBooleanOp(char *word) {
+int isBooleanOp(char* word) {
 	return (strcmp(word, "and") & strcmp(word, "AND") & strcmp(word, "or") & strcmp(word, "OR") & strcmp(word, "not") &
 			strcmp(word, "NOT") & strcmp(word, "xor") & strcmp(word, "XOR")) == 0;
 }
 
-int isValidSearch(searchType st, char *arg) {
+int isValidSearch(searchType st, char* arg) {
 	if (st == NAME) {
 		return 1;
 	} else if (st == SIZE_SMALLER || st == SIZE_BIGGER || st == SIZE_EQUAL) {
@@ -131,19 +131,19 @@ int isValidSearch(searchType st, char *arg) {
 	return 0;
 }
 
-int evaluateAndSearch(char **expression, int exprLen, char *folder, List **result) {
-	Stack *s = initStack();
+int evaluateAndSearch(char** expression, int exprLen, char* folder, List** result) {
+	Stack* s = initStack();
 	for (int i = 0; i < exprLen; i += 2) {
-		char *p1 = expression[i];
+		char* p1 = expression[i];
 		if (!isBooleanOp(p1)) {
 			searchType st = getSearchType(p1, expression[i + 1]);
-			if(st == -1) {
+			if (st == -1) {
 				logMessage(3, "This search doesn't exists");
 				return -1;
 			}
 			if (isValidSearch(st, expression[i + 1])) {
 				void* op1 = prepareArgument(st, expression[i + 1]);
-				List *l1 = searchDirectory(folder, st, op1);
+				List* l1 = searchDirectory(folder, st, op1);
 				push(s, l1);
 			} else {
 				logMessage(3, "This search argument isn't valid");
@@ -151,9 +151,9 @@ int evaluateAndSearch(char **expression, int exprLen, char *folder, List **resul
 			}
 
 		} else {
-			List *l1 = pop(s);
-			List *l2 = NULL;
-			List *l3 = NULL;
+			List* l1 = pop(s);
+			List* l2 = NULL;
+			List* l3 = NULL;
 			if (strcmp(p1, "and") == 0 || strcmp(p1, "AND") == 0) {
 				l2 = pop(s);
 				l3 = listIntersect(l1, l2);
@@ -178,10 +178,10 @@ int evaluateAndSearch(char **expression, int exprLen, char *folder, List **resul
 	return 0;
 }
 
-void *prepareArgument(searchType st, char *arg) {
+void* prepareArgument(searchType st, char* arg) {
 	arg = trimArgument(st, arg);
 	logMessage(0, arg);
-	int *intVal = malloc(sizeof(int));
+	int* intVal = malloc(sizeof(int));
 	unsigned long* perms = malloc(sizeof(unsigned long));
 
 	switch (st) {
@@ -217,7 +217,7 @@ void *prepareArgument(searchType st, char *arg) {
 	}
 }
 
-int getSize(char *sizeAsString) {
+int getSize(char* sizeAsString) {
 	logMessage(0, "Hello %s", sizeAsString);
 	char unit = sizeAsString[strlen(sizeAsString) - 1];
 	if (unit >= '0' && unit <= '9') {
@@ -243,11 +243,11 @@ int getSize(char *sizeAsString) {
 	}
 }
 
-char *trimArgument(searchType st, char *arg) {
+char* trimArgument(searchType st, char* arg) {
 	if (st == SIZE_BIGGER || st == SIZE_SMALLER || st == STATUS_DATE_B || st == STATUS_DATE_A || st == MODIF_DATE_B ||
 		st == MODIF_DATE_A || st == USAGE_DATE_B || st == USAGE_DATE_A) {
 		int s = strlen(arg);
-		char *narg = malloc(s);
+		char* narg = malloc(s);
 		strcpy(narg, &arg[1]);
 		return narg;
 	}

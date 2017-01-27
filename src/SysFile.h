@@ -24,6 +24,6 @@
  * @param smartFolder The path of the folder
  * @return 0 on success, 1 otherwise
  */
-int createSysFile(int pid, char *smartFolder);
+int createSysFile(int pid, char* smartFolder);
 
 #endif /* end of include guard: _SYSFILE_H_ */

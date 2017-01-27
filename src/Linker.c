@@ -9,8 +9,8 @@
 
 #include "Linker.h"
 
-int makeLink(char *pathToLink, char *destFolder) {
-	char *fileName = sbasename(pathToLink);
+int makeLink(char* pathToLink, char* destFolder) {
+	char* fileName = sbasename(pathToLink);
 	char linkName[1024];
 	strcpy(linkName, destFolder);
 	strcat(linkName, "/");
@@ -19,7 +19,7 @@ int makeLink(char *pathToLink, char *destFolder) {
 	return ssymlink(pathToLink, linkName);
 }
 
-int makeFolder(char *path, List *files) {
+int makeFolder(char* path, List* files) {
 	int r = smkdir(path);
 	if (r == -1) {
 		if (errno == EEXIST) {
@@ -29,7 +29,7 @@ int makeFolder(char *path, List *files) {
 		return -1;
 	}
 	logMessage(0, "SmartFolder created %s", path);
-	ListElement *e = files->head;
+	ListElement* e = files->head;
 	while (e != NULL) {
 		if (makeLink(e->data, path) == 0) {
 			logMessage(0, "Link created for %s", e->data);
@@ -42,15 +42,15 @@ int makeFolder(char *path, List *files) {
 	return 0;
 }
 
-int removeFolder(char *path) {
-	DIR *dp = sopendir(path);
+int removeFolder(char* path) {
+	DIR* dp = sopendir(path);
 	if (dp == NULL) {
 		logMessage(3, "Couldn't open directory %s\n", path);
 		return -1;
 	}
 
 	schdir(path);
-	struct dirent *entry;
+	struct dirent* entry;
 	struct stat statbuf;
 	while ((entry = sreaddir(dp)) != NULL) {
 		slstat(entry->d_name, &statbuf);
