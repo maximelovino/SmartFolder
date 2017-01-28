@@ -11,7 +11,7 @@ You can build the project from the `src` directory using `make`
 ### Creation
 `./SmartFolder <SmartFolderPath> <SearchDirectory> <Search...>`
 ### Deletion
-`./SmartFolder - <SmartFolderName>`
+`./SmartFolder -d <SmartFolderName>`
 
 ## Search Specifications
 
